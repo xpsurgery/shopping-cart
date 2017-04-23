@@ -1,0 +1,23 @@
+{
+  "name": "monopoly-game",
+  "version": "1.0.0",
+  "description": "Server for the XPSurgery monopolgy game",
+  "main": "server.js",
+  "engines": {
+    "node": "4.2.3"
+  },
+  "scripts": {
+    "test": "mocha *-spec.js",
+    "test:watch": "npm run test -- --watch --reporter dot --growl"
+  },
+  "dependencies": {
+    "chai": "3.5.0",
+    "es6-promise": "3.2.1",
+    "growl": "1.9.2",
+    "hapi": "13.4.0",
+    "inert": "4.0.0",
+    "isomorphic-fetch": "2.2.1",
+    "mocha": "2.4.5",
+    "uuid": "2.0.2"
+  }
+}
