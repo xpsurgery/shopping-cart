@@ -38,10 +38,17 @@ class Game
   end
 
   def play
+    @payroll_thread = Thread.new do
+      loop do
+        sleep @config.payroll.interval_secs
+        run_payroll
+      end
+    end
     @phase = :playing
   end
 
   def pause
+    @payroll_thread.kill
     @phase = :analysing
   end
 
