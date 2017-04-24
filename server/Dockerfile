@@ -13,5 +13,5 @@ ADD . /opt/app
 WORKDIR /opt/app
 
 EXPOSE 17171
-CMD ["bundle", "exec", "rackup", "--host", "::", "-p", "17171"]
+CMD ["bundle", "exec", "rackup", "--host", "0.0.0.0", "-p", "17171"]
 
