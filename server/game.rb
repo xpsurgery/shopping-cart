@@ -7,6 +7,14 @@ class Game
     payroll: {
       interval_secs: 60,
       wage_bill: 100
+    },
+    sales: {
+      expiry_secs: 3,
+      commission: 500,
+      fine_for_expiry: 0,
+      fine_for_tax_error: 300,
+      fine_for_missing_discount: 50,
+      fine_for_incorrect: 500
     }
   })
 
