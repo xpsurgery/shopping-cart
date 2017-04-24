@@ -6,7 +6,7 @@ PASSING_TESTS := .made-tests
 TMPDIR        := ./tmp
 PIDFILE       := $(TMPDIR)/container.PID
 
-.PHONY: build start stop $(IMAGE) clean clobber
+.PHONY: build start logs stop $(IMAGE) clean clobber
 
 build: $(BUILT_IMAGE)
 
@@ -14,6 +14,9 @@ start: build $(PIDFILE)
 
 $(PIDFILE):
 	docker run --rm --detach -p 17171:17171 $(IMAGE) > $@
+
+logs:
+	docker logs `cat $(PIDFILE)`
 
 stop:
 	docker kill `cat $(PIDFILE)` && rm -f $(PIDFILE)

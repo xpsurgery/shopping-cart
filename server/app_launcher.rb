@@ -1,12 +1,15 @@
 require 'sinatra/base'
 require 'logger'
 require_relative './api'
+require_relative './game'
 
 class ShoppingCartGame < Sinatra::Base
 
   configure do
     disable :show_exceptions
     enable :logging
+
+    set :game, Game.new
   end
 
   before do
