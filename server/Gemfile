@@ -1,0 +1,12 @@
+ruby '2.4.0'
+
+source 'http://rubygems.org'
+
+gem 'thin'
+gem 'sinatra'
+
+gem 'uuidtools'
+
+group :development, :test do
+  gem 'rspec'
+end
