@@ -7,34 +7,35 @@ module Api
     app.post '/start' do
       content_type :json
       app.settings.game.setup
-      [200, JSON.pretty_generate(app.settings.game.teams)]
+      [200, JSON.pretty_generate(app.settings.game.status)]
     end
 
-    app.post '/teams' do
+    app.post '/teams/:name' do
       content_type :json
-      if app.settings.game.phase != :setup
-        return [400, JSON.pretty_generate({
+      if app.settings.game.add_team(params[:name])
+        [200, JSON.pretty_generate(app.settings.game.status)]
+      else
+        [400, JSON.pretty_generate({
           errors: 'Too late, the game has already begun'
         })]
       end
-      app.settings.game.add_team(name)
-      [200, JSON.pretty_generate(app.settings.game.teams)]
     end
 
     app.post '/play' do
       content_type :json
-      [200, JSON.pretty_generate(app.settings.game.play)]
+      app.settings.game.play
+      [200, JSON.pretty_generate(app.settings.game.status)]
     end
 
-    app.get '/teams' do
+    app.get '/status' do
       content_type :json
-      [200, JSON.pretty_generate(app.settings.game.teams)]
+      [200, JSON.pretty_generate(app.settings.game.status)]
     end
 
     app.post '/pause' do
       content_type :json
       app.settings.game.pause
-      [200, JSON.pretty_generate(app.settings.game.teams)]
+      [200, JSON.pretty_generate(app.settings.game.status)]
     end
 
   end

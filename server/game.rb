@@ -1,7 +1,5 @@
 class Game
 
-  attr_reader :teams
-
   def initialize
     setup
   end
@@ -12,21 +10,28 @@ class Game
   end
 
   def add_team(name)
-    content_type :json
+    return false unless @phase == :setup
     @teams << {
       id:      @teams.length + 1,
       name:    name,
       balance: 1000000
     }
+    true
   end
 
   def play
     @phase = :playing
-    @teams
   end
 
   def pause
     @phase = :analysing
+  end
+
+  def status
+    {
+      phase: @phase,
+      teams: @teams
+    }
   end
 
 end
