@@ -15,7 +15,20 @@ class Game
       fine_for_tax_error: 300,
       fine_for_missing_discount: 50,
       fine_for_incorrect: 500
-    }
+    },
+    regional_taxes: {
+      BE: 8.25,
+      FR: 6.25,
+      IT: 6.85,
+      ES: 8.00,
+      NL: 4.00
+    },
+    discount_bands: [
+      { total_less_than: 1000, discount: 0.00 },
+      { total_less_than: 5000, discount: 0.03 },
+      { total_less_than: 7000, discount: 0.05 },
+      { discount: 0.085 },
+    ]
   })
 
   def initialize
