@@ -12,5 +12,6 @@ RUN bundle install
 ADD . /opt/app
 WORKDIR /opt/app
 
-EXPOSE 17172
-CMD ["bundle", "exec", "rackup", "--host", "::", "-p", "17172"]
+EXPOSE 17171
+CMD ["bundle", "exec", "rackup", "--host", "::", "-p", "17171"]
+

@@ -1,12 +1,15 @@
-IMAGE         := xps/logichub-activities
+IMAGE         := xps/shopping-cart-game
 GEMS          := Gemfile.lock
-SOURCES       := $(shell find . -name '*.rb')
+SOURCES       := $(shell find . -name '*.r[bu]')
 BUILT_IMAGE   := .made-image
 PASSING_TESTS := .made-tests
 
-.PHONY: $(IMAGE) clean clobber
+.PHONY: build run $(IMAGE) clean clobber
 
-all: $(BUILT_IMAGE)
+build: $(BUILT_IMAGE)
+
+run: build
+	docker run $(IMAGE) -p 17171:17171
 
 $(BUILT_IMAGE): Dockerfile $(PASSING_TESTS)
 	docker build -t $(IMAGE) .
@@ -24,3 +27,4 @@ clean:
 
 clobber: clean
 	rm -f $(GEMS)
+
