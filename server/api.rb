@@ -6,7 +6,9 @@ module Api
 
     app.post '/start' do
       content_type :json
-      app.settings.game.setup
+      request.body.rewind
+      payload = JSON.parse(request.body.read, symbolize_names: true)
+      app.settings.game.setup(payload)
       [200, JSON.pretty_generate(app.settings.game.status)]
     end
 

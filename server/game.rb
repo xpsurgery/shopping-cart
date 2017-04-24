@@ -1,10 +1,20 @@
 class Game
 
+  DEFAULTS = {
+    initial_balance: 10000,
+    payroll: {
+      interval_secs: 60,
+      wage_bill: 100
+    }
+  }
+
   def initialize
-    setup
+    @config = DEFAULTS
+    setup(DEFAULTS)
   end
 
-  def setup
+  def setup(config)
+    @config = @config.merge(config)
     @phase = :setup
     @teams = []
   end
@@ -14,7 +24,7 @@ class Game
     @teams << {
       id:      @teams.length + 1,
       name:    name,
-      balance: 1000000
+      balance: @config[:initial_balance]
     }
     true
   end
@@ -29,6 +39,7 @@ class Game
 
   def status
     {
+      config: @config,
       phase: @phase,
       teams: @teams
     }
