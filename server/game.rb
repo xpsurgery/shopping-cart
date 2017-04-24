@@ -22,11 +22,17 @@ class Game
   def add_team(name)
     return false unless @phase == :setup
     @teams << {
-      id:      @teams.length + 1,
-      name:    name,
-      balance: @config[:initial_balance]
+      id:           @teams.length + 1,
+      name:         name,
+      cash_balance: @config[:initial_balance]
     }
     true
+  end
+
+  def run_payroll
+    @teams.each do |team|
+      team[:cash_balance] = [team[:cash_balance] - @config[:payroll][:wage_bill], 0].max
+    end
   end
 
   def play

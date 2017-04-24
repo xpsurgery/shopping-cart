@@ -52,8 +52,8 @@ RSpec.describe 'Preparing to play' do
       end
 
       example 'their initial balances match the config' do
-        expect(subject.status[:teams][0][:balance]).to eq(new_balance)
-        expect(subject.status[:teams][1][:balance]).to eq(new_balance)
+        expect(subject.status[:teams][0][:cash_balance]).to eq(new_balance)
+        expect(subject.status[:teams][1][:cash_balance]).to eq(new_balance)
       end
 
       example 'their ids are unique' do
