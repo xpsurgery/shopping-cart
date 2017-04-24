@@ -6,15 +6,15 @@ RSpec.describe 'Preparing to play' do
   describe 'Before setup has been called' do
 
     example 'there are no teams' do
-      expect(subject.status[:teams]).to be_empty
+      expect(subject.status.teams).to be_empty
     end
 
     example 'the game is in the setup phase' do
-      expect(subject.status[:phase]).to eq(:setup)
+      expect(subject.status.phase).to eq(:setup)
     end
 
     example 'the game is using the default config' do
-      expect(subject.status[:config]).to eq(Game::DEFAULTS)
+      expect(subject.status.config).to eq(Game::DEFAULTS)
     end
 
   end
@@ -32,16 +32,16 @@ RSpec.describe 'Preparing to play' do
     end
 
     example 'there are no teams' do
-      expect(subject.status[:teams]).to be_empty
+      expect(subject.status.teams).to be_empty
     end
 
     example 'the game is in the setup phase' do
-      expect(subject.status[:phase]).to eq(:setup)
+      expect(subject.status.phase).to eq(:setup)
     end
 
     example 'the game is using the new config' do
-      expect(subject.status[:config][:initial_balance]).to eq(new_balance)
-      expect(subject.status[:config][:payroll]).to eq(Game::DEFAULTS[:payroll])
+      expect(subject.status.config.initial_balance).to eq(new_balance)
+      expect(subject.status.config.payroll).to eq(Game::DEFAULTS.payroll)
     end
 
     describe 'When teams are added' do
@@ -52,13 +52,13 @@ RSpec.describe 'Preparing to play' do
       end
 
       example 'their initial balances match the config' do
-        expect(subject.status[:teams][0][:cash_balance]).to eq(new_balance)
-        expect(subject.status[:teams][1][:cash_balance]).to eq(new_balance)
+        expect(subject.status.teams[0].cash_balance).to eq(new_balance)
+        expect(subject.status.teams[1].cash_balance).to eq(new_balance)
       end
 
       example 'their ids are unique' do
-        teams = subject.status[:teams]
-        expect(teams[0][:id]).to_not eq(teams[1][:id])
+        teams = subject.status.teams
+        expect(teams[0].id).to_not eq(teams[1].id)
       end
 
     end
