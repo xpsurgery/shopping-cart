@@ -12,7 +12,7 @@ build: $(BUILT_IMAGE)
 
 start: build $(PIDFILE)
 
-$(PIDFILE):
+$(PIDFILE): $(TMPDIR)
 	docker run --rm --detach -p 17171:17171 $(IMAGE) > $@
 
 logs:
