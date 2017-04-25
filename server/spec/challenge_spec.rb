@@ -24,8 +24,8 @@ RSpec.describe 'Completing challenges' do
     example 'an error is returned' do
       errors = {}
       subject.answer(id, {},
-        lambda {|_| expect.fail },
-        lambda { |e| errors = e })
+        lambda {|_| fail 'Should not reach here' },
+        lambda {|e| errors = e })
       expect(errors.errors[0]).to eq('Please wait until the game is in progress')
     end
 
