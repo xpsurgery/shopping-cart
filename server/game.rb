@@ -58,18 +58,26 @@ class Game
     end
   end
 
-  def play
-    @payroll_thread = Thread.new do
-      loop do
-        sleep @config.payroll.interval_secs
-        run_payroll
+  def play(run_payroll  = true)
+    if run_payroll
+      @payroll_thread = Thread.new do
+        loop do
+          sleep @config.payroll.interval_secs
+          run_payroll
+        end
       end
     end
     @phase = :playing
   end
 
+  def answer(id, payload, on_success, on_error)
+    on_error.call(Hashie::Mash.new({
+      errors: ['Please wait until the game is in progress']
+    }))
+  end
+
   def pause
-    @payroll_thread.kill
+    @payroll_thread.kill if @payroll_thread
     @phase = :analysing
   end
 
