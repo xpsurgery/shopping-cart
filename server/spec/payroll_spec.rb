@@ -1,6 +1,6 @@
 require_relative '../game'
 
-RSpec.describe 'Playing the game' do
+RSpec.describe 'Running payroll' do
   subject { Game.new }
 
   describe '#run_payroll' do
