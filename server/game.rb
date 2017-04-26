@@ -70,10 +70,22 @@ class Game
     @phase = :playing
   end
 
+  def issue_challenge
+    Hashie::Mash.new({
+      id: '1234'
+    })
+  end
+
   def answer(id, payload, on_success, on_error)
     if @phase != :playing
       on_error.call(Hashie::Mash.new({
         errors: ['Please wait until the game is in progress']
+      }))
+      return
+    end
+    unless payload.teamName
+      on_error.call(Hashie::Mash.new({
+        errors: ['Please supply your team name']
       }))
       return
     end

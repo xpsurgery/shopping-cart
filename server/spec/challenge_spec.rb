@@ -1,6 +1,6 @@
 require_relative '../game'
 
-def expect_errors(payload, expected_errors)
+def expect_errors(id, payload, expected_errors)
   errors = {}
   subject.answer(id, payload,
     lambda {|_| fail 'Should not reach here' },
@@ -18,7 +18,6 @@ RSpec.describe 'Completing challenges' do
       }
     }
   }
-  let(:id) { '1234' }                 # TODO: random guids
   subject { Game.new }
 
   before do
@@ -30,7 +29,7 @@ RSpec.describe 'Completing challenges' do
   context 'when we are not playing' do
 
     example 'an error is returned' do
-      expect_errors({}, ['Please wait until the game is in progress'])
+      expect_errors('0', {}, ['Please wait until the game is in progress'])
     end
 
   end
@@ -38,22 +37,31 @@ RSpec.describe 'Completing challenges' do
   context 'when we are playing' do
 
     before do
-      subject.play
+      subject.play(false)
     end
 
     context 'but there was no such challenge' do
 
     example 'an error is returned' do
-      expect_errors({}, ["No challenge with id #{id} has been issued"])
+      payload = Hashie::Mash.new({ teamName: 'fred' })
+      expect_errors('0', payload, ["No challenge with id 0 has been issued"])
     end
 
     end
 
     context 'and the challenge was issued' do
+      let(:challenge) { subject.issue_challenge }
 
       context 'and answered with' do
 
-        context 'no team name'
+        context 'no team name' do
+          example 'an error is returned' do
+            payload = Hashie::Mash.new({})
+            expect_errors(challenge.id, payload, ['Please supply your team name'])
+          end
+        end
+
+        context 'after the challenge has expired'
 
         context 'everything correct'
 
