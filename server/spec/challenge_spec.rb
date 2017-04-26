@@ -37,7 +37,17 @@ RSpec.describe 'Completing challenges' do
       subject.play
     end
 
-    context 'but there was no such challenge'
+    context 'but there was no such challenge' do
+
+    example 'an error is returned' do
+      errors = {}
+      subject.answer(id, {},
+        lambda {|_| fail 'Should not reach here' },
+        lambda {|e| errors = e })
+      expect(errors.errors[0]).to eq("No challenge with id #{id} has been issued")
+    end
+
+    end
 
     context 'and the challenge was issued' do
 

@@ -71,8 +71,14 @@ class Game
   end
 
   def answer(id, payload, on_success, on_error)
+    if @phase != :playing
+      on_error.call(Hashie::Mash.new({
+        errors: ['Please wait until the game is in progress']
+      }))
+      return
+    end
     on_error.call(Hashie::Mash.new({
-      errors: ['Please wait until the game is in progress']
+      errors: ["No challenge with id #{id} has been issued"]
     }))
   end
 
