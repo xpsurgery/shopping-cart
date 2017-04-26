@@ -1,5 +1,13 @@
 require_relative '../game'
 
+def expect_errors(payload, expected_errors)
+  errors = {}
+  subject.answer(id, payload,
+    lambda {|_| fail 'Should not reach here' },
+    lambda {|e| errors = e })
+  expect(errors.errors).to eq(expected_errors)
+end
+
 RSpec.describe 'Completing challenges' do
   let(:new_balance) { 50 }
   let(:new_config) {
@@ -22,11 +30,7 @@ RSpec.describe 'Completing challenges' do
   context 'when we are not playing' do
 
     example 'an error is returned' do
-      errors = {}
-      subject.answer(id, {},
-        lambda {|_| fail 'Should not reach here' },
-        lambda {|e| errors = e })
-      expect(errors.errors[0]).to eq('Please wait until the game is in progress')
+      expect_errors({}, ['Please wait until the game is in progress'])
     end
 
   end
@@ -40,11 +44,7 @@ RSpec.describe 'Completing challenges' do
     context 'but there was no such challenge' do
 
     example 'an error is returned' do
-      errors = {}
-      subject.answer(id, {},
-        lambda {|_| fail 'Should not reach here' },
-        lambda {|e| errors = e })
-      expect(errors.errors[0]).to eq("No challenge with id #{id} has been issued")
+      expect_errors({}, ["No challenge with id #{id} has been issued"])
     end
 
     end
