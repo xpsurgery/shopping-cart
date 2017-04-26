@@ -37,19 +37,25 @@ RSpec.describe 'Completing challenges' do
       subject.play
     end
 
-    context 'when there was no such challenge'
+    context 'but there was no such challenge'
 
-    context 'when the challenge was issued' do
+    context 'and the challenge was issued' do
 
-      context 'when the team name is not supplied'
+      context 'and answered with' do
 
-      context 'when the answer is correct'
+        context 'no team name'
 
-      context 'when the discount is not applied'
+        context 'everything correct'
 
-      context 'when the sales tax is not added'
+        context 'tax but no discount'
 
-      context 'when the answer is completely undecipherable'
+        context 'discount but no tax'
+
+        context 'neither tax nor discount'
+
+        context 'an unfathomable answer'
+
+      end
 
     end
 
