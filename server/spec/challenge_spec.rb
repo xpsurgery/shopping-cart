@@ -61,7 +61,16 @@ RSpec.describe 'Completing challenges' do
           end
         end
 
-        context 'after the challenge has expired'
+        context 'after the challenge has expired' do
+
+          example 'an error is returned' do
+            payload = Hashie::Mash.new({
+              teamName: 'fred'
+            })
+            expect_errors(challenge.id, payload, ["Challenge #{challenge.id} has timed out"])
+          end
+
+        end
 
         context 'everything correct'
 

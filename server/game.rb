@@ -32,6 +32,7 @@ class Game
   })
 
   def initialize
+    @challenges = Hashie::Mash.new
     @config = DEFAULTS
     setup(DEFAULTS)
   end
@@ -71,9 +72,12 @@ class Game
   end
 
   def issue_challenge
-    Hashie::Mash.new({
-      id: '1234'
+    id = '1234'
+    challenge = Hashie::Mash.new({
+      id: id
     })
+    @challenges[id] = challenge
+    challenge
   end
 
   def answer(id, payload, on_success, on_error)
@@ -89,8 +93,14 @@ class Game
       }))
       return
     end
+    unless @challenges.has_key?(id)
+      on_error.call(Hashie::Mash.new({
+        errors: ["No challenge with id #{id} has been issued"]
+      }))
+      return
+    end
     on_error.call(Hashie::Mash.new({
-      errors: ["No challenge with id #{id} has been issued"]
+      errors: ["Challenge #{id} has timed out"]
     }))
   end
 
