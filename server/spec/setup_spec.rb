@@ -47,18 +47,18 @@ RSpec.describe 'Preparing to play' do
     describe 'When teams are added' do
 
       before do
-        subject.add_team('first')
-        subject.add_team('second')
+        subject.add_team('Team A')
+        subject.add_team('Team B')
       end
 
       example 'their initial balances match the config' do
-        expect(subject.status.teams[0].cash_balance).to eq(new_balance)
-        expect(subject.status.teams[1].cash_balance).to eq(new_balance)
+        expect(subject.status.teams['Team A'].cash_balance).to eq(new_balance)
+        expect(subject.status.teams['Team B'].cash_balance).to eq(new_balance)
       end
 
       example 'their ids are unique' do
         teams = subject.status.teams
-        expect(teams[0].id).to_not eq(teams[1].id)
+        expect(teams['Team A'].id).to_not eq(teams['Team B'].id)
       end
 
     end

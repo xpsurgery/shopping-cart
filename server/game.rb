@@ -11,24 +11,58 @@ class Game
     sales: {
       expiry_secs: 3,
       commission: 500,
-      fine_for_expiry: 0,
+      fine_for_late_attempt: 0,
       fine_for_tax_error: 300,
       fine_for_missing_discount: 50,
       fine_for_incorrect: 500
     },
-    regional_taxes: {
-      BE: 8.25,
-      FR: 6.25,
-      IT: 6.85,
-      ES: 8.00,
-      NL: 4.00
-    },
-    discount_bands: [
-      { total_less_than: 1000, discount: 0.00 },
-      { total_less_than: 5000, discount: 0.03 },
-      { total_less_than: 7000, discount: 0.05 },
-      { discount: 0.085 },
-    ]
+    regions: {
+      BE: {
+        sales_tax: 8.25,
+        discount_bands: [
+          { total_less_than: 1000, discount: 0.00 },
+          { total_less_than: 5000, discount: 0.03 },
+          { total_less_than: 7000, discount: 0.05 },
+          { discount: 0.085 }
+        ]
+      },
+      FR: {
+        sales_tax: 6.25,
+        discount_bands: [
+          { total_less_than: 1000, discount: 0.00 },
+          { total_less_than: 5000, discount: 0.03 },
+          { total_less_than: 7000, discount: 0.05 },
+          { discount: 0.085 }
+        ]
+      },
+      IT: {
+        sales_tax: 6.85,
+        discount_bands: [
+          { total_less_than: 1000, discount: 0.00 },
+          { total_less_than: 5000, discount: 0.03 },
+          { total_less_than: 7000, discount: 0.05 },
+          { discount: 0.085 }
+        ]
+      },
+      ES: {
+        sales_tax: 8.00,
+        discount_bands: [
+          { total_less_than: 1000, discount: 0.00 },
+          { total_less_than: 5000, discount: 0.03 },
+          { total_less_than: 7000, discount: 0.05 },
+          { discount: 0.085 }
+        ]
+      },
+      NL: {
+        sales_tax: 4.00,
+        discount_bands: [
+          { total_less_than: 1000, discount: 0.00 },
+          { total_less_than: 5000, discount: 0.03 },
+          { total_less_than: 7000, discount: 0.05 },
+          { discount: 0.085 }
+        ]
+      }
+    }
   })
 
   def initialize
@@ -40,13 +74,13 @@ class Game
   def setup(config)
     @config = @config.merge(config)
     @phase = :setup
-    @teams = []
+    @teams = Hashie::Mash.new
   end
 
   def add_team(name)
     return false unless @phase == :setup
-    @teams << Hashie::Mash.new({
-      id:           @teams.length + 1,
+    @teams[name] = Hashie::Mash.new({
+      id:           @teams.keys.length + 1,
       name:         name,
       cash_balance: @config.initial_balance
     })
@@ -54,7 +88,7 @@ class Game
   end
 
   def run_payroll
-    @teams.each do |team|
+    @teams.each do |_, team|
       team.cash_balance = [team.cash_balance - @config.payroll.wage_bill, 0].max
     end
   end

@@ -15,6 +15,10 @@ RSpec.describe 'Completing challenges' do
       initial_balance: new_balance,
       payroll: {
         wage_bill: 35
+      },
+      sales: {
+        expiry_secs: 3,
+        fine_for_late_attempt: 100
       }
     }
   }
@@ -22,8 +26,8 @@ RSpec.describe 'Completing challenges' do
 
   before do
     subject.setup(new_config)
-    subject.add_team('first')
-    subject.add_team('second')
+    subject.add_team('Team A')
+    subject.add_team('Team B')
   end
 
   context 'when we are not playing' do
@@ -42,10 +46,10 @@ RSpec.describe 'Completing challenges' do
 
     context 'but there was no such challenge' do
 
-    example 'an error is returned' do
-      payload = Hashie::Mash.new({ teamName: 'fred' })
-      expect_errors('0', payload, ["No challenge with id 0 has been issued"])
-    end
+      example 'an error is returned' do
+        payload = Hashie::Mash.new({ teamName: 'Team B' })
+        expect_errors('0', payload, ["No challenge with id 0 has been issued"])
+      end
 
     end
 
@@ -61,13 +65,20 @@ RSpec.describe 'Completing challenges' do
           end
         end
 
+        context 'an unknown team name'
+
         context 'after the challenge has expired' do
+          let(:answer) {
+            Hashie::Mash.new({
+              teamName: 'Team B'
+            })
+          }
 
           example 'an error is returned' do
-            payload = Hashie::Mash.new({
-              teamName: 'fred'
-            })
-            expect_errors(challenge.id, payload, ["Challenge #{challenge.id} has timed out"])
+            expect_errors(challenge.id, answer, ["Challenge #{challenge.id} has timed out"])
+          end
+
+          example 'the team is fined' do
           end
 
         end
