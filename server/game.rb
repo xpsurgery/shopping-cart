@@ -44,14 +44,29 @@ class Game
   end
 
   def issue(timestamp = Time.now)
-    id = '1234'
-    challenge = Hashie::Mash.new({
+    id = '1234'                                              # TODO
+    region_name = 'ES'
+    region = @config.regions[region_name]
+    num_items = 5
+    unit_price = 10
+    response = Hashie::Mash.new({
       id: id,
+      region: region_name,
+      numberOfItems: num_items,
+      unitPrice: unit_price,
       issuedAt: timestamp,
       expiresAt: timestamp + @config.sales.expiry_secs
     })
-    @challenges[id] = challenge
-    challenge
+    basic = num_items * unit_price
+    @challenges[id] = response.merge({
+      valid_responses: {
+        correct: 34,
+        tax_but_no_discount: 34,
+        discount_but_no_tax: 34,
+        no_tax_or_discount: basic
+      }
+    })
+    response
   end
 
   def answer(id, payload, on_success = nil, on_error = nil)
