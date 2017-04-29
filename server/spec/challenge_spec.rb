@@ -9,7 +9,7 @@ def expect_errors(id, payload, expected_error)
 end
 
 RSpec.describe 'Completing challenges' do
-  let(:new_balance) { 50 }
+  let(:new_balance) { 5000 }
   let(:new_config) {
     {
       initial_balance: new_balance,
@@ -76,10 +76,8 @@ RSpec.describe 'Completing challenges' do
 
           example 'the team is fined' do
             errors = {}
-            subject.answer(challenge.id, answer,
-              lambda {|_| fail 'Should not reach here' },
-              lambda {|e| errors = e })
-            expect(errors.errors).to eq('')
+            subject.answer(challenge.id, answer)
+            expect(subject.status.teams['Team B'].cash_balance).to eq(4900)
           end
 
         end
