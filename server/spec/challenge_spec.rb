@@ -1,11 +1,11 @@
 require_relative '../game'
 
-def expect_errors(id, payload, expected_errors)
+def expect_errors(id, payload, expected_error)
   errors = {}
   subject.answer(id, payload,
     lambda {|_| fail 'Should not reach here' },
     lambda {|e| errors = e })
-  expect(errors.errors).to eq(expected_errors)
+  expect(errors.errors).to include(expected_error)
 end
 
 RSpec.describe 'Completing challenges' do
@@ -33,7 +33,7 @@ RSpec.describe 'Completing challenges' do
   context 'when we are not playing' do
 
     example 'an error is returned' do
-      expect_errors('0', {}, ['Please wait until the game is in progress'])
+      expect_errors('0', Hashie::Mash.new, 'Please wait until the game is in progress')
     end
 
   end
@@ -48,7 +48,7 @@ RSpec.describe 'Completing challenges' do
 
       example 'an error is returned' do
         payload = Hashie::Mash.new({ teamName: 'Team B' })
-        expect_errors('0', payload, ["No challenge with id 0 has been issued"])
+        expect_errors('0', payload, "No challenge with id 0 has been issued")
       end
 
     end
@@ -61,11 +61,13 @@ RSpec.describe 'Completing challenges' do
         context 'no team name' do
           example 'an error is returned' do
             payload = Hashie::Mash.new({})
-            expect_errors(challenge.id, payload, ['Please supply your team name'])
+            expect_errors(challenge.id, payload, 'Please supply your team name')
           end
         end
 
         context 'an unknown team name'
+
+        context 'no answer'
 
         context 'after the challenge has expired' do
           let(:answer) {
@@ -75,10 +77,15 @@ RSpec.describe 'Completing challenges' do
           }
 
           example 'an error is returned' do
-            expect_errors(challenge.id, answer, ["Challenge #{challenge.id} has timed out"])
+            expect_errors(challenge.id, answer, "Challenge #{challenge.id} has timed out")
           end
 
           example 'the team is fined' do
+            errors = {}
+            subject.answer(challenge.id, answer,
+              lambda {|_| fail 'Should not reach here' },
+              lambda {|e| errors = e })
+            expect(errors.errors).to eq('')
           end
 
         end

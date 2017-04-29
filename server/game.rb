@@ -106,36 +106,35 @@ class Game
   end
 
   def issue_challenge
+    timestamp = Time.now
     id = '1234'
     challenge = Hashie::Mash.new({
-      id: id
+      id: id,
+      issuedAt: timestamp,
+      expiresAt: timestamp + @config.sales.expiry_secs
     })
     @challenges[id] = challenge
     challenge
   end
 
   def answer(id, payload, on_success, on_error)
-    if @phase != :playing
-      on_error.call(Hashie::Mash.new({
-        errors: ['Please wait until the game is in progress']
-      }))
-      return
+    errors = []
+    errors << 'Please wait until the game is in progress' if @phase != :playing
+    errors << 'Please supply your team name' unless payload.teamName
+    if @challenges.has_key?(id)
+      challenge = @challenges[id]
+      errors << "Challenge #{id} has timed out" if Time.now < challenge.expiresAt
+    else
+      errors << "No challenge with id #{id} has been issued" unless @challenges.has_key?(id)
     end
-    unless payload.teamName
+
+    if errors.empty?
+      on_success.call
+    else
       on_error.call(Hashie::Mash.new({
-        errors: ['Please supply your team name']
+        errors: errors
       }))
-      return
     end
-    unless @challenges.has_key?(id)
-      on_error.call(Hashie::Mash.new({
-        errors: ["No challenge with id #{id} has been issued"]
-      }))
-      return
-    end
-    on_error.call(Hashie::Mash.new({
-      errors: ["Challenge #{id} has timed out"]
-    }))
   end
 
   def pause
