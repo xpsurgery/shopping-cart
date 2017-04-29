@@ -1,4 +1,5 @@
 require_relative '../game'
+require_relative '../config'
 
 RSpec.describe 'Preparing to play' do
   subject { Game.new }
@@ -14,7 +15,7 @@ RSpec.describe 'Preparing to play' do
     end
 
     example 'the game is using the default config' do
-      expect(subject.status.config).to eq(Game::DEFAULTS)
+      expect(subject.status.config).to eq(Config::DEFAULTS)
     end
 
   end
@@ -41,7 +42,7 @@ RSpec.describe 'Preparing to play' do
 
     example 'the game is using the new config' do
       expect(subject.status.config.initial_balance).to eq(new_balance)
-      expect(subject.status.config.payroll).to eq(Game::DEFAULTS.payroll)
+      expect(subject.status.config.payroll).to eq(Config::DEFAULTS.payroll)
     end
 
     describe 'When teams are added' do
