@@ -8,8 +8,8 @@ class Challenge
   def initialize(config, timestamp = Time.now)
     region_name = config.regions.keys.sample
     region = config.regions[region_name]
-    num_items = 5
-    unit_price = 10
+    num_items = 15 + Random.rand(125)
+    unit_price = 15 + Random.rand(125)
     @challenge = Hashie::Mash.new({
       id: UUIDTools::UUID.timestamp_create.to_s,
       region: region_name,
