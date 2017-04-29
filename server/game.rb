@@ -62,8 +62,10 @@ class Game
         errors << "Unknown team '#{payload.teamName}'"
       elsif @challenges.has_key?(id)
         challenge = @challenges[id]
-        errors << "Challenge #{id} has timed out" if Time.now >= challenge.expiresAt
-        team.cash_balance = team.cash_balance - @config.sales.fine_for_late_attempt
+        if Time.now >= challenge.expiresAt
+          team.cash_balance = team.cash_balance - @config.sales.fine_for_late_attempt
+          errors << "Challenge #{id} has timed out. You have been fined #{@config.sales.fine_for_late_attempt}."
+        end
       else
         errors << "No challenge with id #{id} has been issued" unless @challenges.has_key?(id)
       end

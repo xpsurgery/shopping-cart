@@ -71,7 +71,8 @@ RSpec.describe 'Completing challenges' do
           }
 
           example 'an error is returned' do
-            expect_errors(challenge.id, answer, "Challenge #{challenge.id} has timed out")
+            expect_errors(challenge.id, answer,
+                          "Challenge #{challenge.id} has timed out. You have been fined 100.")
           end
 
           example 'the team is fined' do
