@@ -2,7 +2,7 @@ require_relative '../game'
 
 def expect_errors(id, payload, expected_error)
   errors = {}
-  subject.challenge.answer(id, payload,
+  subject.answer(id, payload,
     lambda {|_| fail 'Should not reach here' },
     lambda {|e| errors = e })
   expect(errors.errors).to include(expected_error)
@@ -30,14 +30,6 @@ RSpec.describe 'Completing challenges' do
     subject.add_team('Team B')
   end
 
-  context 'when we are not playing' do
-
-    example 'an error is returned' do
-      expect_errors('0', Hashie::Mash.new, 'Please wait until the game is in progress')
-    end
-
-  end
-
   context 'when we are playing' do
 
     before do
@@ -54,7 +46,8 @@ RSpec.describe 'Completing challenges' do
     end
 
     context 'and the challenge was issued' do
-      let(:challenge) { subject.challenge.issue }
+      let(:issued_at) { Time.now }
+      let(:challenge) { subject.issue(issued_at) }
 
       context 'and answered with' do
 
@@ -70,6 +63,7 @@ RSpec.describe 'Completing challenges' do
         context 'no answer'
 
         context 'after the challenge has expired' do
+          let(:issued_at) { Time.now - 200 }
           let(:answer) {
             Hashie::Mash.new({
               teamName: 'Team B'
@@ -82,7 +76,7 @@ RSpec.describe 'Completing challenges' do
 
           example 'the team is fined' do
             errors = {}
-            subject.challenge.answer(challenge.id, answer,
+            subject.answer(challenge.id, answer,
               lambda {|_| fail 'Should not reach here' },
               lambda {|e| errors = e })
             expect(errors.errors).to eq('')
