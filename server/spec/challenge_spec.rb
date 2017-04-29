@@ -2,7 +2,7 @@ require_relative '../game'
 
 def expect_errors(id, payload, expected_error)
   errors = {}
-  subject.answer(id, payload,
+  subject.challenge.answer(id, payload,
     lambda {|_| fail 'Should not reach here' },
     lambda {|e| errors = e })
   expect(errors.errors).to include(expected_error)
@@ -54,7 +54,7 @@ RSpec.describe 'Completing challenges' do
     end
 
     context 'and the challenge was issued' do
-      let(:challenge) { subject.issue_challenge }
+      let(:challenge) { subject.challenge.issue }
 
       context 'and answered with' do
 
@@ -82,7 +82,7 @@ RSpec.describe 'Completing challenges' do
 
           example 'the team is fined' do
             errors = {}
-            subject.answer(challenge.id, answer,
+            subject.challenge.answer(challenge.id, answer,
               lambda {|_| fail 'Should not reach here' },
               lambda {|e| errors = e })
             expect(errors.errors).to eq('')
