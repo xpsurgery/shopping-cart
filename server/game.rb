@@ -53,30 +53,33 @@ class Game
   end
 
   def answer(id, payload, on_success = nil, on_error = nil)
-    errors = []
-    if payload.teamName
-      team = @teams[payload.teamName]
-      if team == nil
-        errors << "Unknown team '#{payload.teamName}'"
-      elsif @challenges.has_key?(id)
-        challenge = @challenges[id]
-        if Time.now >= challenge.challenge.expiresAt
-          team.cash_balance = team.cash_balance - @config.sales.fine_for_late_attempt
-          errors << "Challenge #{id} has timed out. You have been fined #{@config.sales.fine_for_late_attempt}."
-        end
-      else
-        errors << "No challenge with id #{id} has been issued" unless @challenges.has_key?(id)
-      end
-    else
-      errors << 'Please supply your team name'
+    unless payload.teamName
+      error = 'Please supply your team name'
+      return on_error.call(Hashie::Mash.new({ errors: [error] })) if on_error
+    end
+    team = @teams[payload.teamName]
+    if team == nil
+      error = "Unknown team '#{payload.teamName}'"
+      return on_error.call(Hashie::Mash.new({ errors: [error] })) if on_error
+    end
+    unless @challenges.has_key?(id)
+      error = "No challenge with id #{id} has been issued" unless @challenges.has_key?(id)
+      return on_error.call(Hashie::Mash.new({ errors: [error] })) if on_error
     end
 
+    challenge = @challenges[id]
+    if Time.now >= challenge.challenge.expiresAt
+      fine = @config.sales.fine_for_late_attempt
+      team.cash_balance = team.cash_balance - fine
+      error = "Challenge #{id} has timed out. You have been fined #{fine}."
+      return on_error.call(Hashie::Mash.new({ errors: [error] })) if on_error
+    end
+
+    errors = []
     if errors.empty?
       on_success.call({}) if on_success
     else
-      on_error.call(Hashie::Mash.new({
-        errors: errors
-      })) if on_error
+      on_error.call(Hashie::Mash.new({ errors: errors })) if on_error
     end
   end
 
