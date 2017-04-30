@@ -6,7 +6,6 @@ class Challenge
   attr_reader :challenge, :valid_responses
 
   def initialize(config, randomiser, timestamp = Time.now)
-    config = config
     region_name = randomiser.region_name
     num_items = randomiser.num_items
     unit_price = randomiser.unit_price
@@ -41,10 +40,8 @@ class Challenge
 
   def discount(basic)
     @region.discount_bands.each do |band|
-      if band.percent_discount
-        if basic < band.total_less_than
-          return band.percent_discount
-        end
+      if band.total_less_than
+        return band.percent_discount if basic < band.total_less_than
       else
         return band.percent_discount
       end
