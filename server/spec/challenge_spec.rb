@@ -8,38 +8,43 @@ RSpec.describe 'Creating challenges' do
       },
       regions: {
         UK: {
-          sales_tax: 6.85,
+          sales_tax_percent: 6.85,
           discount_bands: [
-            { total_less_than:  1000, discount: 0.00 },
-            { total_less_than:  5000, discount: 0.03 },
-            { total_less_than:  9000, discount: 0.05 },
-            { total_less_than: 13000, discount: 0.07 },
-            { discount: 0.085 }
-          ]
-        },
-        JP: {
-          sales_tax: 3.00,
-          discount_bands: [
-            { total_less_than:  1000, discount: 0.00 },
-            { total_less_than:  5000, discount: 0.02 },
-            { total_less_than:  9000, discount: 0.04 },
-            { total_less_than: 13000, discount: 0.06 },
-            { discount: 0.09 }
+            { total_less_than:  1000, percent_discount: 0 },
+            { total_less_than:  5000, percent_discount: 3 },
+            { total_less_than:  9000, percent_discount: 5 },
+            { total_less_than: 13000, percent_discount: 7 },
+            { percent_discount: 8.5 }
           ]
         }
       }
     })
   }
-  subject { Challenge.new(config) }
+  let(:randomiser) {
+    Hashie::Mash.new({
+      region_name: 'UK',
+      num_items: 87,
+      unit_price: 64
+    })
+  }
+  subject { Challenge.new(config, randomiser) }
 
-  it 'calculates the valid responses correctly' do
+  it 'initialises the challenge using the randomiser' do
     challenge = subject.challenge
-    valid_responses = subject.valid_responses
-    puts challenge
-    puts valid_responses
-    expect(valid_responses.no_tax_or_discount).to eq(challenge.numberOfItems * challenge.unitPrice)
-    region_name = challenge.region
-    expect(['UK', 'JP']).to include(region_name)
+    expect(challenge.region).to eq('UK')
+    expect(challenge.numberOfItems).to eq(87)
+    expect(challenge.unitPrice).to eq(64)
+  end
+
+  describe 'valid responses' do
+    let(:valid_responses) { subject.valid_responses }
+
+    it 'rounds down only at the end of the calculation' do
+      expect(valid_responses.no_tax_or_discount).to eq(5568)
+      expect(valid_responses.tax_but_no_discount).to eq(5949)
+      expect(valid_responses.discount_but_no_tax).to eq(5289)
+      expect(valid_responses.correct).to eq(5651)
+    end
   end
 
 end
