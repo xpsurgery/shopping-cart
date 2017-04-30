@@ -79,7 +79,14 @@ RSpec.describe 'Completing challenges' do
 
         end
 
-        context 'no answer'
+        context 'no answer' do
+
+          example 'an error is returned' do
+            payload = Hashie::Mash.new({ teamName: 'Team B' })
+            expect_errors(challenge.id, payload, "Please supply an answer to the challenge")
+          end
+
+        end
 
         context 'after the challenge has expired' do
           let(:issued_at) { Time.now - 200 }
@@ -96,7 +103,7 @@ RSpec.describe 'Completing challenges' do
 
           example 'the team is fined' do
             errors = {}
-            subject.answer(challenge.id, answer)
+            subject.answer(challenge.id, answer, lambda {}, lambda{|_|})
             expect(subject.status.teams['Team B'].cash_balance).to eq(4900)
           end
 
@@ -106,7 +113,7 @@ RSpec.describe 'Completing challenges' do
           let(:answer) {
             Hashie::Mash.new({
               teamName: 'Team B',
-              total: 123
+              answer: 123
             })
           }
 

@@ -52,7 +52,7 @@ class Game
     response
   end
 
-  def answer(id, payload, on_success = nil, on_error = nil)
+  def answer(id, payload, on_success, on_error)
     unless payload.teamName
       error = 'Please supply your team name'
       return on_error.call(Hashie::Mash.new({ errors: [error] })) if on_error
@@ -72,6 +72,10 @@ class Game
       fine = @config.sales.fine_for_late_attempt
       team.cash_balance = team.cash_balance - fine
       error = "Challenge #{id} has timed out. You have been fined #{fine}."
+      return on_error.call(Hashie::Mash.new({ errors: [error] })) if on_error
+    end
+    unless payload.answer
+      error = 'Please supply an answer to the challenge'
       return on_error.call(Hashie::Mash.new({ errors: [error] })) if on_error
     end
 
