@@ -70,7 +70,14 @@ RSpec.describe 'Completing challenges' do
           end
         end
 
-        context 'an unknown team name'
+        context 'an unknown team name' do
+
+          example 'an error is returned' do
+            payload = Hashie::Mash.new({ teamName: 'Team X' })
+            expect_errors('0', payload, "Unknown team 'Team X'")
+          end
+
+        end
 
         context 'no answer'
 
