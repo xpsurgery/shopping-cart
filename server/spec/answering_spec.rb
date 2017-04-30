@@ -19,6 +19,18 @@ RSpec.describe 'Completing challenges' do
       sales: {
         expiry_secs: 3,
         fine_for_late_attempt: 100
+      },
+      regions: {
+        UK: {
+          sales_tax_percent: 6.85,
+          discount_bands: [
+            { total_less_than:  1000, percent_discount: 0 },
+            { total_less_than:  5000, percent_discount: 3 },
+            { total_less_than:  9000, percent_discount: 5 },
+            { total_less_than: 13000, percent_discount: 7 },
+            { percent_discount: 8.5 }
+          ]
+        }
       }
     }
   }

@@ -1,5 +1,7 @@
 require 'hashie/mash'
+require_relative './challenge'
 require_relative './config'
+require_relative './randomiser'
 
 class Game
 
@@ -44,28 +46,9 @@ class Game
   end
 
   def issue(timestamp = Time.now)
-    id = '1234'                                              # TODO
-    region_name = 'ES'
-    region = @config.regions[region_name]
-    num_items = 5
-    unit_price = 10
-    response = Hashie::Mash.new({
-      id: id,
-      region: region_name,
-      numberOfItems: num_items,
-      unitPrice: unit_price,
-      issuedAt: timestamp,
-      expiresAt: timestamp + @config.sales.expiry_secs
-    })
-    basic = num_items * unit_price
-    @challenges[id] = response.merge({
-      valid_responses: {
-        correct: 34,
-        tax_but_no_discount: 34,
-        discount_but_no_tax: 34,
-        no_tax_or_discount: basic
-      }
-    })
+    challenge = Challenge.new(@config, Randomiser.new(@config.regions.keys), timestamp)
+    response = challenge.challenge
+    @challenges[response.id] = challenge
     response
   end
 
@@ -77,7 +60,7 @@ class Game
         errors << "Unknown team '#{payload.teamName}'"
       elsif @challenges.has_key?(id)
         challenge = @challenges[id]
-        if Time.now >= challenge.expiresAt
+        if Time.now >= challenge.challenge.expiresAt
           team.cash_balance = team.cash_balance - @config.sales.fine_for_late_attempt
           errors << "Challenge #{id} has timed out. You have been fined #{@config.sales.fine_for_late_attempt}."
         end

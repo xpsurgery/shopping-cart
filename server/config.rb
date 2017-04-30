@@ -18,48 +18,53 @@ module Config
     },
     regions: {
       BE: {
-        sales_tax: 8.25,
+        sales_tax_percent: 8.25,
         discount_bands: [
-          { total_less_than: 1000, discount: 0.00 },
-          { total_less_than: 5000, discount: 0.03 },
-          { total_less_than: 7000, discount: 0.05 },
-          { discount: 0.085 }
+          { total_less_than:  1000, percent_discount: 0 },
+          { total_less_than:  5000, percent_discount: 3 },
+          { total_less_than:  9000, percent_discount: 5 },
+          { total_less_than: 13000, percent_discount: 7 },
+          { percent_discount: 8.5 }
         ]
       },
       FR: {
-        sales_tax: 6.25,
+        sales_tax_percent: 6.25,
         discount_bands: [
-          { total_less_than: 1000, discount: 0.00 },
-          { total_less_than: 5000, discount: 0.03 },
-          { total_less_than: 7000, discount: 0.05 },
-          { discount: 0.085 }
+          { total_less_than:  1000, percent_discount: 0 },
+          { total_less_than:  5000, percent_discount: 3 },
+          { total_less_than:  9000, percent_discount: 5 },
+          { total_less_than: 13000, percent_discount: 7 },
+          { percent_discount: 8.5 }
         ]
       },
       IT: {
-        sales_tax: 6.85,
+        sales_tax_percent: 6.85,
         discount_bands: [
-          { total_less_than: 1000, discount: 0.00 },
-          { total_less_than: 5000, discount: 0.03 },
-          { total_less_than: 7000, discount: 0.05 },
-          { discount: 0.085 }
+          { total_less_than:  1000, percent_discount: 0 },
+          { total_less_than:  5000, percent_discount: 3 },
+          { total_less_than:  9000, percent_discount: 5 },
+          { total_less_than: 13000, percent_discount: 7 },
+          { percent_discount: 8.5 }
         ]
       },
       ES: {
-        sales_tax: 8.00,
+        sales_tax_percent: 8.00,
         discount_bands: [
-          { total_less_than: 1000, discount: 0.00 },
-          { total_less_than: 5000, discount: 0.03 },
-          { total_less_than: 7000, discount: 0.05 },
-          { discount: 0.085 }
+          { total_less_than:  1000, percent_discount: 0 },
+          { total_less_than:  5000, percent_discount: 3 },
+          { total_less_than:  9000, percent_discount: 5 },
+          { total_less_than: 13000, percent_discount: 7 },
+          { percent_discount: 8.5 }
         ]
       },
       NL: {
-        sales_tax: 4.00,
+        sales_tax_percent: 4.00,
         discount_bands: [
-          { total_less_than: 1000, discount: 0.00 },
-          { total_less_than: 5000, discount: 0.03 },
-          { total_less_than: 7000, discount: 0.05 },
-          { discount: 0.085 }
+          { total_less_than:  1000, percent_discount: 0 },
+          { total_less_than:  5000, percent_discount: 3 },
+          { total_less_than:  9000, percent_discount: 5 },
+          { total_less_than: 13000, percent_discount: 7 },
+          { percent_discount: 8.5 }
         ]
       }
     }
