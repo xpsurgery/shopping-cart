@@ -1,6 +1,6 @@
 require 'json'
 
-module Api
+module AdminApi
 
   def self.registered(app)
 
