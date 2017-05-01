@@ -1,6 +1,7 @@
 require 'sinatra/base'
 require 'logger'
 require_relative './admin_api'
+require_relative './player_api'
 require_relative './game'
 
 class ShoppingCartGame < Sinatra::Base
@@ -42,6 +43,7 @@ class ShoppingCartGame < Sinatra::Base
   end
 
   register AdminApi
+  register PlayerApi
 
   not_found do
     content_type :json
