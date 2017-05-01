@@ -18,7 +18,7 @@ RSpec.describe 'Completing challenges' do
       },
       sales: {
         expiry_secs: 3,
-        fine_for_late_attempt: 100
+        penalty_for_late_attempt: 100
       },
       regions: {
         UK: {

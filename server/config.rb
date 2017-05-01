@@ -11,10 +11,10 @@ module Config
     sales: {
       expiry_secs: 3,
       commission: 500,
-      fine_for_late_attempt: 0,
-      fine_for_tax_error: 300,
-      fine_for_missing_discount: 50,
-      fine_for_incorrect: 500
+      penalty_for_late_attempt: 0,
+      penalty_for_tax_error: 300,
+      penalty_for_missing_discount: 50,
+      penalty_for_incorrect: 500
     },
     regions: {
       BE: {
