@@ -47,9 +47,8 @@ class Game
 
   def issue(timestamp = Time.now)
     challenge = Challenge.new(@config, Randomiser.new(@config.regions.keys), timestamp)
-    response = challenge.challenge
-    @challenges[response.id] = challenge
-    response
+    @challenges[challenge.challenge.id] = challenge
+    challenge
   end
 
   def answer(id, payload, on_success, on_error)

@@ -67,7 +67,7 @@ RSpec.describe 'Completing challenges' do
         context 'no team name' do
           example 'an error is returned' do
             payload = Hashie::Mash.new({})
-            expect_errors(challenge.id, payload, 'Please supply your team name')
+            expect_errors(challenge.challenge.id, payload, 'Please supply your team name')
           end
         end
 
@@ -84,7 +84,7 @@ RSpec.describe 'Completing challenges' do
 
           example 'an error is returned' do
             payload = Hashie::Mash.new({ teamName: 'Team B' })
-            expect_errors(challenge.id, payload, "Please supply an answer to the challenge")
+            expect_errors(challenge.challenge.id, payload, "Please supply an answer to the challenge")
           end
 
         end
@@ -98,12 +98,12 @@ RSpec.describe 'Completing challenges' do
           }
 
           example 'an error is returned' do
-            expect_errors(challenge.id, answer, "Challenge #{challenge.id} has timed out")
+            expect_errors(challenge.challenge.id, answer, "Challenge #{challenge.challenge.id} has timed out")
           end
 
           example 'the team is fined' do
             errors = {}
-            subject.answer(challenge.id, answer, lambda {}, lambda{|_|})
+            subject.answer(challenge.challenge.id, answer, lambda {}, lambda{|_|})
             expect(subject.status.teams['Team B'].cash_balance).to eq(4900)
           end
 
@@ -113,20 +113,20 @@ RSpec.describe 'Completing challenges' do
           let(:answer) {
             Hashie::Mash.new({
               teamName: 'Team B',
-              answer: 123
+              answer: challenge.valid_responses.correct
             })
           }
 
           example 'the response indicates success' do
             reply = nil
-            subject.answer(challenge.id, answer,
+            subject.answer(challenge.challenge.id, answer,
               lambda {|resp| reply = resp },
               lambda {|errors| fail 'Should not reach here' })
             expect(reply.income).to eq(800)
           end
 
           example 'the team earns commission' do
-            subject.answer(challenge.id, answer, lambda {|_|}, lambda{|_|})
+            subject.answer(challenge.challenge.id, answer, lambda {|_|}, lambda{|_|})
             expect(subject.status.teams['Team B'].cash_balance).to eq(5800)
           end
         end
