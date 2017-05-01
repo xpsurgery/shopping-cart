@@ -10,9 +10,9 @@ module Config
     },
     sales: {
       expiry_secs: 3,
-      commission: 500,
       penalty_for_late_attempt: 0,
-      penalty_for_tax_error: 300,
+      commission: 500,                                          # TODO: per region
+      penalty_for_missing_tax: 300,
       penalty_for_missing_discount: 50,
       penalty_for_incorrect: 500
     },

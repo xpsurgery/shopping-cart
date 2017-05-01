@@ -78,13 +78,54 @@ class Game
       return on_error.call(Hashie::Mash.new({ errors: [error], penalty: 0 }))
     end
 
-    commission = @config.sales.commission
-    team.cash_balance = team.cash_balance + commission
-    result = Hashie::Mash.new({
-      income: commission
-    })
+    valid_responses = challenge.valid_responses
 
-    on_success.call(result)
+    if payload.answer == valid_responses.correct
+      result = Hashie::Mash.new({ })
+      commission = @config.sales.commission
+      team.cash_balance = team.cash_balance + commission
+      result.income = commission
+      return on_success.call(result)
+    end
+
+    if payload.answer == valid_responses.tax_but_no_discount
+      result = Hashie::Mash.new({ })
+      commission = @config.sales.commission
+      penalty = @config.sales.penalty_for_missing_discount
+      team.cash_balance = team.cash_balance + commission - penalty
+      result.income = commission
+      result.penalties = { missing_discount: penalty }
+      return on_success.call(result)
+    end
+
+    if payload.answer == valid_responses.discount_but_no_tax
+      result = Hashie::Mash.new({ })
+      commission = @config.sales.commission
+      penalty = @config.sales.penalty_for_missing_tax
+      team.cash_balance = team.cash_balance + commission - penalty
+      result.income = commission
+      result.penalties = { missing_tax: penalty }
+      return on_success.call(result)
+    end
+
+    if payload.answer == valid_responses.no_tax_or_discount
+      result = Hashie::Mash.new({ })
+      commission = @config.sales.commission
+      penalty1 = @config.sales.penalty_for_missing_tax
+      penalty2 = @config.sales.penalty_for_missing_discount
+      team.cash_balance = team.cash_balance + commission - penalty1 - penalty2
+      result.income = commission
+      result.penalties = {
+        missing_tax: penalty1,
+        missing_discount: penalty2
+      }
+      return on_success.call(result)
+    end
+
+    penalty = @config.sales.penalty_for_incorrect
+    team.cash_balance = team.cash_balance - penalty
+    error = 'Incorrect answer'
+    return on_error.call(Hashie::Mash.new({ errors: [error], penalty: penalty }))
   end
 
   def pause

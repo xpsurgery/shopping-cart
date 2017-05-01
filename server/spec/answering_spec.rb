@@ -19,6 +19,9 @@ RSpec.describe 'Completing challenges' do
       sales: {
         commission: 800,
         expiry_secs: 3,
+        penalty_for_missing_discount: 345,
+        penalty_for_missing_tax: 348,
+        penalty_for_incorrect: 346,
         penalty_for_late_attempt: 100
       },
       regions: {
@@ -131,13 +134,94 @@ RSpec.describe 'Completing challenges' do
           end
         end
 
-        context 'tax but no discount'
+        context 'tax but no discount' do
+          let(:answer) {
+            Hashie::Mash.new({
+              teamName: 'Team B',
+              answer: challenge.valid_responses.tax_but_no_discount
+            })
+          }
 
-        context 'discount but no tax'
+          example 'the response indicates success' do
+            reply = nil
+            subject.answer(challenge.challenge.id, answer,
+              lambda {|resp| reply = resp },
+              lambda {|errors| fail 'Should not reach here' })
+            expect(reply.income).to eq(800)
+            expect(reply.penalties.missing_discount).to eq(345)
+          end
 
-        context 'neither tax nor discount'
+          example 'the team earns commission' do
+            subject.answer(challenge.challenge.id, answer, lambda {|_|}, lambda{|_|})
+            expect(subject.status.teams['Team B'].cash_balance).to eq(5455)
+          end
+        end
 
-        context 'an unfathomable answer'
+        context 'discount but no tax' do
+          let(:answer) {
+            Hashie::Mash.new({
+              teamName: 'Team B',
+              answer: challenge.valid_responses.discount_but_no_tax
+            })
+          }
+
+          example 'the response indicates success' do
+            reply = nil
+            subject.answer(challenge.challenge.id, answer,
+              lambda {|resp| reply = resp },
+              lambda {|errors| fail 'Should not reach here' })
+            expect(reply.income).to eq(800)
+            expect(reply.penalties.missing_tax).to eq(348)
+          end
+
+          example 'the team earns commission' do
+            subject.answer(challenge.challenge.id, answer, lambda {|_|}, lambda{|_|})
+            expect(subject.status.teams['Team B'].cash_balance).to eq(5452)
+          end
+        end
+
+        context 'neither tax nor discount' do
+          let(:answer) {
+            Hashie::Mash.new({
+              teamName: 'Team B',
+              answer: challenge.valid_responses.no_tax_or_discount
+            })
+          }
+
+          example 'the response indicates success' do
+            reply = nil
+            subject.answer(challenge.challenge.id, answer,
+              lambda {|resp| reply = resp },
+              lambda {|errors| fail 'Should not reach here' })
+            expect(reply.income).to eq(800)
+            expect(reply.penalties.missing_tax).to eq(348)
+            expect(reply.penalties.missing_discount).to eq(345)
+          end
+
+          example 'the team earns commission' do
+            subject.answer(challenge.challenge.id, answer, lambda {|_|}, lambda{|_|})
+            expect(subject.status.teams['Team B'].cash_balance).to eq(5107)
+          end
+        end
+
+        context 'an unfathomable answer' do
+          let(:answer) {
+            Hashie::Mash.new({
+              teamName: 'Team B',
+              answer: 0
+            })
+          }
+
+          example 'an error is returned' do
+            expect_errors(challenge.challenge.id, answer, "Incorrect answer")
+          end
+
+          example 'the team is fined' do
+            errors = {}
+            subject.answer(challenge.challenge.id, answer, lambda {|_|}, lambda{|_|})
+            expect(subject.status.teams['Team B'].cash_balance).to eq(4654)
+          end
+        end
 
       end
 
