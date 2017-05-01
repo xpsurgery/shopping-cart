@@ -52,38 +52,46 @@ class Game
   end
 
   def answer(id, payload, on_success, on_error)
+    result = Hashie::Mash.new({
+      penalties: { }
+    })
     unless payload.teamName
-      error = 'Please supply your team name'
-      return on_error.call(Hashie::Mash.new({ errors: [error], penalty: 0 }))
+      result.errors = ['Please supply your team name']
+      return on_error.call(result)
     end
     errors = []
     team = @teams[payload.teamName]
     if team == nil
       errors << "Unknown team '#{payload.teamName}'"
     end
+    result.team = team
     unless @challenges.has_key?(id)
       errors << "No challenge with id #{id} has been issued" unless @challenges.has_key?(id)
     end
     unless errors.empty?
-      return on_error.call(Hashie::Mash.new({ errors: errors, penalty: 0 }))
+      result.errors = errors
+      return on_error.call(result)
     end
 
     challenge = @challenges[id]
+    result.challenge = challenge.challenge
+
     if Time.now >= challenge.challenge.expiresAt
       penalty = @config.sales.penalty_for_late_attempt
       team.cash_balance = team.cash_balance - penalty
-      error = "Challenge #{id} has timed out"
-      return on_error.call(Hashie::Mash.new({ errors: [error], penalty: penalty }))
+      result.errors = ["Challenge #{id} has timed out"]
+      result.penalties = { challengeExpired: penalty }
+      return on_error.call(result)
     end
+
     unless payload.answer
-      error = 'Please supply an answer to the challenge'
-      return on_error.call(Hashie::Mash.new({ errors: [error], penalty: 0 }))
+      result.errors = ['Please supply an answer to the challenge']
+      return on_error.call(result)
     end
 
     valid_responses = challenge.valid_responses
 
     if payload.answer == valid_responses.correct
-      result = Hashie::Mash.new({ })
       commission = @config.sales.commission
       team.cash_balance = team.cash_balance + commission
       result.income = commission
@@ -91,7 +99,6 @@ class Game
     end
 
     if payload.answer == valid_responses.tax_but_no_discount
-      result = Hashie::Mash.new({ })
       commission = @config.sales.commission
       penalty = @config.sales.penalty_for_missing_discount
       team.cash_balance = team.cash_balance + commission - penalty
@@ -101,7 +108,6 @@ class Game
     end
 
     if payload.answer == valid_responses.discount_but_no_tax
-      result = Hashie::Mash.new({ })
       commission = @config.sales.commission
       penalty = @config.sales.penalty_for_missing_tax
       team.cash_balance = team.cash_balance + commission - penalty
@@ -111,7 +117,6 @@ class Game
     end
 
     if payload.answer == valid_responses.no_tax_or_discount
-      result = Hashie::Mash.new({ })
       commission = @config.sales.commission
       penalty1 = @config.sales.penalty_for_missing_tax
       penalty2 = @config.sales.penalty_for_missing_discount
