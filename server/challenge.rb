@@ -3,14 +3,14 @@ require 'uuidtools'
 
 class Challenge
 
-  attr_reader :challenge, :valid_responses
+  attr_reader :id, :challenge, :valid_responses
 
   def initialize(config, randomiser, timestamp = Time.now)
     region_name = randomiser.region_name
     num_items = randomiser.num_items
     unit_price = randomiser.unit_price
+    @id = UUIDTools::UUID.timestamp_create.to_s,
     @challenge = Hashie::Mash.new({
-      id: UUIDTools::UUID.timestamp_create.to_s,
       region: region_name,
       numberOfItems: num_items,
       unitPrice: unit_price,

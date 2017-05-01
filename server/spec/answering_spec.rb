@@ -70,7 +70,7 @@ RSpec.describe 'Completing challenges' do
         context 'no team name' do
           example 'an error is returned' do
             payload = Hashie::Mash.new({})
-            expect_errors(challenge.challenge.id, payload, 'Please supply your team name')
+            expect_errors(challenge.id, payload, 'Please supply your team name')
           end
         end
 
@@ -87,7 +87,7 @@ RSpec.describe 'Completing challenges' do
 
           example 'an error is returned' do
             payload = Hashie::Mash.new({ teamName: 'Team B' })
-            expect_errors(challenge.challenge.id, payload, "Please supply an answer to the challenge")
+            expect_errors(challenge.id, payload, "Please supply an answer to the challenge")
           end
 
         end
@@ -101,12 +101,12 @@ RSpec.describe 'Completing challenges' do
           }
 
           example 'an error is returned' do
-            expect_errors(challenge.challenge.id, answer, "Challenge #{challenge.challenge.id} has timed out")
+            expect_errors(challenge.id, answer, "Challenge #{challenge.id} has timed out")
           end
 
           example 'the team is fined' do
             errors = {}
-            subject.answer(challenge.challenge.id, answer, lambda {}, lambda{|_|})
+            subject.answer(challenge.id, answer, lambda {}, lambda{|_|})
             expect(subject.status.teams['Team B'].cash_balance).to eq(4900)
           end
 
@@ -122,14 +122,14 @@ RSpec.describe 'Completing challenges' do
 
           example 'the response indicates success' do
             reply = nil
-            subject.answer(challenge.challenge.id, answer,
+            subject.answer(challenge.id, answer,
               lambda {|resp| reply = resp },
               lambda {|errors| fail 'Should not reach here' })
             expect(reply.income).to eq(800)
           end
 
           example 'the team earns commission' do
-            subject.answer(challenge.challenge.id, answer, lambda {|_|}, lambda{|_|})
+            subject.answer(challenge.id, answer, lambda {|_|}, lambda{|_|})
             expect(subject.status.teams['Team B'].cash_balance).to eq(5800)
           end
         end
@@ -144,7 +144,7 @@ RSpec.describe 'Completing challenges' do
 
           example 'the response indicates success' do
             reply = nil
-            subject.answer(challenge.challenge.id, answer,
+            subject.answer(challenge.id, answer,
               lambda {|resp| reply = resp },
               lambda {|errors| fail 'Should not reach here' })
             expect(reply.income).to eq(800)
@@ -152,7 +152,7 @@ RSpec.describe 'Completing challenges' do
           end
 
           example 'the team earns commission' do
-            subject.answer(challenge.challenge.id, answer, lambda {|_|}, lambda{|_|})
+            subject.answer(challenge.id, answer, lambda {|_|}, lambda{|_|})
             expect(subject.status.teams['Team B'].cash_balance).to eq(5455)
           end
         end
@@ -167,7 +167,7 @@ RSpec.describe 'Completing challenges' do
 
           example 'the response indicates success' do
             reply = nil
-            subject.answer(challenge.challenge.id, answer,
+            subject.answer(challenge.id, answer,
               lambda {|resp| reply = resp },
               lambda {|errors| fail 'Should not reach here' })
             expect(reply.income).to eq(800)
@@ -175,7 +175,7 @@ RSpec.describe 'Completing challenges' do
           end
 
           example 'the team earns commission' do
-            subject.answer(challenge.challenge.id, answer, lambda {|_|}, lambda{|_|})
+            subject.answer(challenge.id, answer, lambda {|_|}, lambda{|_|})
             expect(subject.status.teams['Team B'].cash_balance).to eq(5452)
           end
         end
@@ -190,7 +190,7 @@ RSpec.describe 'Completing challenges' do
 
           example 'the response indicates success' do
             reply = nil
-            subject.answer(challenge.challenge.id, answer,
+            subject.answer(challenge.id, answer,
               lambda {|resp| reply = resp },
               lambda {|errors| fail 'Should not reach here' })
             expect(reply.income).to eq(800)
@@ -199,7 +199,7 @@ RSpec.describe 'Completing challenges' do
           end
 
           example 'the team earns commission' do
-            subject.answer(challenge.challenge.id, answer, lambda {|_|}, lambda{|_|})
+            subject.answer(challenge.id, answer, lambda {|_|}, lambda{|_|})
             expect(subject.status.teams['Team B'].cash_balance).to eq(5107)
           end
         end
@@ -213,12 +213,12 @@ RSpec.describe 'Completing challenges' do
           }
 
           example 'an error is returned' do
-            expect_errors(challenge.challenge.id, answer, "Incorrect answer")
+            expect_errors(challenge.id, answer, "Incorrect answer")
           end
 
           example 'the team is fined' do
             errors = {}
-            subject.answer(challenge.challenge.id, answer, lambda {|_|}, lambda{|_|})
+            subject.answer(challenge.id, answer, lambda {|_|}, lambda{|_|})
             expect(subject.status.teams['Team B'].cash_balance).to eq(4654)
           end
         end
