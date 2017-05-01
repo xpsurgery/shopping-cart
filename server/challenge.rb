@@ -9,7 +9,7 @@ class Challenge
     region_name = randomiser.region_name
     num_items = randomiser.num_items
     unit_price = randomiser.unit_price
-    @id = UUIDTools::UUID.timestamp_create.to_s,
+    @id = UUIDTools::UUID.timestamp_create.to_s
     @challenge = Hashie::Mash.new({
       region: region_name,
       numberOfItems: num_items,
