@@ -17,6 +17,7 @@ RSpec.describe 'Completing challenges' do
         wage_bill: 35
       },
       sales: {
+        commission: 800,
         expiry_secs: 3,
         penalty_for_late_attempt: 100
       },
@@ -117,9 +118,16 @@ RSpec.describe 'Completing challenges' do
           }
 
           example 'the response indicates success' do
+            reply = nil
             subject.answer(challenge.id, answer,
-              lambda {|resp| },
+              lambda {|resp| reply = resp },
               lambda {|errors| fail 'Should not reach here' })
+            expect(reply.income).to eq(800)
+          end
+
+          example 'the team earns commission' do
+            subject.answer(challenge.id, answer, lambda {|_|}, lambda{|_|})
+            expect(subject.status.teams['Team B'].cash_balance).to eq(5800)
           end
         end
 

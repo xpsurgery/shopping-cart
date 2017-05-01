@@ -79,7 +79,13 @@ class Game
       return on_error.call(Hashie::Mash.new({ errors: [error], penalty: 0 }))
     end
 
-    on_success.call({})
+    commission = @config.sales.commission
+    team.cash_balance = team.cash_balance + commission
+    result = Hashie::Mash.new({
+      income: commission
+    })
+
+    on_success.call(result)
   end
 
   def pause
