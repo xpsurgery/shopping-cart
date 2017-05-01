@@ -56,14 +56,16 @@ class Game
       error = 'Please supply your team name'
       return on_error.call(Hashie::Mash.new({ errors: [error], penalty: 0 }))
     end
+    errors = []
     team = @teams[payload.teamName]
     if team == nil
-      error = "Unknown team '#{payload.teamName}'"
-      return on_error.call(Hashie::Mash.new({ errors: [error], penalty: 0 }))
+      errors << "Unknown team '#{payload.teamName}'"
     end
     unless @challenges.has_key?(id)
-      error = "No challenge with id #{id} has been issued" unless @challenges.has_key?(id)
-      return on_error.call(Hashie::Mash.new({ errors: [error], penalty: 0 }))
+      errors << "No challenge with id #{id} has been issued" unless @challenges.has_key?(id)
+    end
+    unless errors.empty?
+      return on_error.call(Hashie::Mash.new({ errors: errors, penalty: 0 }))
     end
 
     challenge = @challenges[id]

@@ -1,4 +1,5 @@
 require 'json'
+require 'hashie/mash'
 
 module PlayerApi
 
@@ -17,7 +18,7 @@ module PlayerApi
       content_type :json
       request.body.rewind
       begin
-        payload = JSON.parse(request.body.read, symbolize_names: true)
+        payload = Hashie::Mash.new(JSON.parse(request.body.read, symbolize_names: true))
         app.settings.game.answer(params[:id], payload,
           lambda {|resp| [400, JSON.pretty_generate(resp)] },
           lambda {|resp| [200, JSON.pretty_generate(resp)] })
