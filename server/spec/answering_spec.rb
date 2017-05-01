@@ -24,11 +24,11 @@ RSpec.describe 'Completing challenges' do
         UK: {
           sales_tax_percent: 6.85,
           discount_bands: [
-            { total_less_than:  1000, percent_discount: 0 },
-            { total_less_than:  5000, percent_discount: 3 },
-            { total_less_than:  9000, percent_discount: 5 },
-            { total_less_than: 13000, percent_discount: 7 },
-            { percent_discount: 8.5 }
+            { total_less_than:  1000, discount_percent: 0 },
+            { total_less_than:  5000, discount_percent: 3 },
+            { total_less_than:  9000, discount_percent: 5 },
+            { total_less_than: 13000, discount_percent: 7 },
+            { discount_percent: 8.5 }
           ]
         }
       }

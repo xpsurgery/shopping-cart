@@ -41,9 +41,9 @@ class Challenge
   def discount(basic)
     @region.discount_bands.each do |band|
       if band.total_less_than
-        return band.percent_discount if basic < band.total_less_than
+        return band.discount_percent if basic < band.total_less_than
       else
-        return band.percent_discount
+        return band.discount_percent
       end
     end
     return 0
