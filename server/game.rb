@@ -55,16 +55,17 @@ class Game
     result = Hashie::Mash.new({
       penalties: { }
     })
-    unless payload.teamName
-      result.errors = ['Please supply your team name']
-      return on_error.call(result)
-    end
     errors = []
-    team = @teams[payload.teamName]
-    if team == nil
-      errors << "Unknown team '#{payload.teamName}'"
+    if payload.teamName
+      team = @teams[payload.teamName]
+      if team
+        result.team = team
+      else
+        errors << "Unknown team '#{payload.teamName}'"
+      end
+    else
+      errors << 'Please supply your team name'
     end
-    result.team = team
     unless @challenges.has_key?(id)
       errors << "No challenge with id #{id} has been issued" unless @challenges.has_key?(id)
     end
