@@ -132,8 +132,9 @@ class Game
 
     penalty = @config.sales.penalty_for_incorrect
     team.cash_balance = team.cash_balance - penalty
-    error = 'Incorrect answer'
-    return on_error.call(Hashie::Mash.new({ errors: [error], penalty: penalty }))
+    result.errors = ['Incorrect answer']
+    result.penalties = { incorrectAnswer: penalty }
+    return on_error.call(result)
   end
 
   def pause
