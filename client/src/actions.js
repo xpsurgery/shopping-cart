@@ -1,4 +1,3 @@
-var uuid = require('uuid')
 import { API_CALL } from './middleware/api'
 
 export const START_NEW_GAME_REQUEST = 'START_NEW_GAME_REQUEST'
@@ -35,7 +34,6 @@ export const addTeam = (name) => ({
   endpoint: '/teams',
   method: 'post',
   body: {
-    id: uuid.v1(),
     name: name
   },
   onRequest: ADD_TEAM_REQUEST,
