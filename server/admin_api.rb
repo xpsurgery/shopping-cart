@@ -13,10 +13,10 @@ module AdminApi
       [200, JSON.pretty_generate(app.settings.game.status)]
     end
 
-    app.post '/teams/:name' do
+    app.post '/teams' do
       content_type :json
       request.body.rewind
-      payload = request.body.read.strip
+      payload = JSON.parse(request.body.read.strip, symbolize_names: true)
       if app.settings.game.add_team(payload[:name])
         [200, JSON.pretty_generate(app.settings.game.status)]
       else
