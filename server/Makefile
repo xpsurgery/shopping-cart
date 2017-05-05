@@ -13,13 +13,14 @@ build: $(BUILT_IMAGE)
 start: build $(PIDFILE)
 
 $(PIDFILE): $(TMPDIR)
-	docker run --rm --detach -p 17171:17171 $(IMAGE) > $@
+	docker run --rm --detach -v `pwd`/../public:/opt/app/public -p 17171:17171 $(IMAGE) > $@
 
 logs:
 	docker logs `cat $(PIDFILE)`
 
 stop:
-	docker kill `cat $(PIDFILE)` && rm -f $(PIDFILE)
+	-docker kill `cat $(PIDFILE)`
+	rm -f $(PIDFILE)
 
 $(TMPDIR):
 	mkdir -p $@
@@ -36,7 +37,7 @@ $(GEMS): Gemfile
 	bundle install
 
 clean:
-	rm $(BUILT_IMAGE) $(PASSING_TESTS)
+	rm -f $(BUILT_IMAGE) $(PASSING_TESTS)
 
 clobber: clean
 	rm -f $(GEMS) $(PIDFILE)

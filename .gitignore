@@ -1,6 +1,7 @@
 .made-*
 .env
 *.pem
+public/*
 *.swp
 .tags*
 tmp
