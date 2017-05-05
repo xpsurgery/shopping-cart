@@ -57,11 +57,6 @@ RSpec.describe 'Preparing to play' do
         expect(subject.status.teams['Team B'].cash_balance).to eq(new_balance)
       end
 
-      example 'their ids are unique' do
-        teams = subject.status.teams
-        expect(teams['Team A'].id).to_not eq(teams['Team B'].id)
-      end
-
     end
 
   end

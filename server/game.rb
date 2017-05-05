@@ -19,6 +19,10 @@ class Game
 
   def add_team(name)
     return false unless @phase == :setup
+    return false unless name
+    name = name.strip
+    return false if name.empty?
+    return false if @teams.has_key?(name)
     @teams[name] = Hashie::Mash.new({
       id:           @teams.keys.length + 1,
       name:         name,
