@@ -12,7 +12,7 @@ export default (state=initialState, action) => {
     case ADD_TEAM_SUCCESS:
     case FETCH_TEAMS_SUCCESS:
       var newstate = {...state}
-      for (let team of action.response.teams) {
+      for (let team in action.response.teams) {
         if (!newstate[team.id])
           newstate[team.id] = {
             ...team,
