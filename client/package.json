@@ -8,7 +8,9 @@
   },
   "scripts": {
     "build": "webpack --config webpack.config.js",
-    "build:watch": "npm run build -- --watch --progress"
+    "build:watch": "npm run build -- --watch --progress",
+    "test": "NODE_ENV=test mocha --reporter dot --compilers js:babel-core/register src/**/*-spec.js",
+    "test:watch": "npm run test -- --watch --growl"
   },
   "dependencies": {
     "babel-core": "6.8.0",
@@ -19,6 +21,7 @@
     "babel-preset-react": "6.5.0",
     "babel-preset-stage-0": "6.5.0",
     "bootstrap": "3.3.6",
+    "chai": "3.5.0",
     "css-loader": "0.23.1",
     "eslint": "2.9.0",
     "eslint-loader": "1.3.0",
@@ -29,6 +32,7 @@
     "jquery": "2.2.3",
     "less": "2.7.1",
     "less-loader": "2.2.3",
+    "mocha": "3.3.0",
     "raw-loader": "0.5.1",
     "react": "15.0.2",
     "react-dom": "15.0.2",
