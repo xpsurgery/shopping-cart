@@ -28,7 +28,7 @@ const Game = React.createClass({
 })
 
 const phaseDisplays = {
-  'adding-teams': <AddTeams />,
+  'setup': <AddTeams />,
   'playing':      <PlayGame />,
   'analysing':    <Analyse />
 }

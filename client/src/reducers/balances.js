@@ -1,5 +1,5 @@
 import {
-  START_NEW_GAME_SUCCESS,
+//  START_NEW_GAME_SUCCESS,
   ADD_TEAM_SUCCESS,
   FETCH_TEAMS_SUCCESS
 } from '../actions'
@@ -8,7 +8,7 @@ const initialState = {}
 
 export default (state=initialState, action) => {
   switch (action.type) {
-    case START_NEW_GAME_SUCCESS:
+//    case START_NEW_GAME_SUCCESS:
     case ADD_TEAM_SUCCESS:
     case FETCH_TEAMS_SUCCESS:
       var newstate = {...state}
