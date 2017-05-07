@@ -1,18 +1,5 @@
 import { API_CALL } from './app/middleware/api'
 
-export const START_NEW_GAME_REQUEST = 'START_NEW_GAME_REQUEST'
-export const START_NEW_GAME_SUCCESS = 'START_NEW_GAME_SUCCESS'
-export const START_NEW_GAME_FAILURE = 'START_NEW_GAME_FAILURE'
-
-export const startNewGame = () => ({
-  type: API_CALL,
-  endpoint: '/setup',
-  method: 'post',
-  onRequest: START_NEW_GAME_REQUEST,
-  onSuccess: START_NEW_GAME_SUCCESS,
-  onFailure: START_NEW_GAME_FAILURE
-})
-
 export const FETCH_TEAMS_REQUEST = 'FETCH_TEAMS_REQUEST'
 export const FETCH_TEAMS_SUCCESS = 'FETCH_TEAMS_SUCCESS'
 export const FETCH_TEAMS_FAILURE = 'FETCH_TEAMS_FAILURE'
@@ -66,3 +53,4 @@ export const cease = () => ({
   onSuccess: CEASE_SUCCESS,
   onFailure: CEASE_FAILURE
 })
+

@@ -4,7 +4,7 @@ import Header from './Header'
 import AddTeams from '../teams/AddTeams'
 import PlayGame from '../trends/PlayGame'
 import Analyse from '../trends/Analyse'
-import { startNewGame } from '../actions'
+import { startNewGame } from './actionCreators'
 
 const Game = React.createClass({
   componentDidMount: function() {
@@ -28,9 +28,9 @@ const Game = React.createClass({
 })
 
 const phaseDisplays = {
-  'setup': <AddTeams />,
-  'playing':      <PlayGame />,
-  'analysing':    <Analyse />
+  'setup':     <AddTeams />,
+  'playing':   <PlayGame />,
+  'analysing': <Analyse />
 }
 
 const mapStateToProps = (state) => ({
