@@ -20,10 +20,10 @@ const AddTeam = React.createClass({
 
   render: function() {
     return (
-      <tr>
-        <td> <input type='text' value={this.state.value} onChange={this.char} /> </td>
-        <td> <button onClick={this.add}> Add </button> </td>
-      </tr>
+      <div>
+        <input type='text' value={this.state.value} onChange={this.char} />
+        <button onClick={this.add}> Add </button>
+      </div>
     )
   }
 })

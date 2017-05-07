@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Header from './Header'
-import AddTeams from '../teams/AddTeams'
+import Setup from '../teams/Setup'
 import PlayGame from '../trends/PlayGame'
 import Analyse from '../trends/Analyse'
 import { startNewGame } from './actionCreators'
@@ -28,7 +28,7 @@ const Game = React.createClass({
 })
 
 const phaseDisplays = {
-  'setup':     <AddTeams />,
+  'setup':     <Setup />,
   'playing':   <PlayGame />,
   'analysing': <Analyse />
 }
