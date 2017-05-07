@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { addTeam } from '../actions'
+import { addTeam } from './actionCreators'
 
 const AddTeam = React.createClass({
   getInitialState: function() {
@@ -29,3 +29,4 @@ const AddTeam = React.createClass({
 })
 
 export default connect()(AddTeam)
+
