@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux'
-import balances from '../reducers/balances'
+import balances from '../trends/reducer'
 import phase from '../phases/reducer'
 
 export default combineReducers({
-  balances,
-  phase
+  phase,
+  balances
 })
+
