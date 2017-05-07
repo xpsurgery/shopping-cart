@@ -10,7 +10,7 @@ const Teams = ({ teams }) =>
           teams.map(team => (
             <tr key={team.id}>
               <td> {team.name} </td>
-              <td style={{backgroundColor:team.colour}}> &nbsp; </td>
+              <td style={{ backgroundColor:team.colour }}> &nbsp; </td>
               <td> {team.balance} </td>
             </tr>
           ))
