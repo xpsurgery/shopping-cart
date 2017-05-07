@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import mapStateToProps from './prepareTeams'
 
 const Teams = ({ teams }) =>
   <div className='teams'>
@@ -9,7 +10,7 @@ const Teams = ({ teams }) =>
           teams.map(team => (
             <tr key={team.id}>
               <td> {team.name} </td>
-              <td> {team.colour} </td>
+              <td style={{backgroundColor:team.colour}}> &nbsp; </td>
               <td> {team.balance} </td>
             </tr>
           ))
@@ -18,10 +19,5 @@ const Teams = ({ teams }) =>
     </table>
   </div>
 
-const mapStateToProps = (state) => {
-  return {
-    teams: Object.keys(state.balances).map(teamId => state.balances[teamId])
-  }
-}
-
 export default connect(mapStateToProps)(Teams)
+
