@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { startNewGame } from '../actions'
+import { startNewGame } from './actionCreators'
 
 const RestartButton = ({dispatch}) =>
   <button className='btn btn-primary' onClick={() => dispatch(startNewGame())}>
@@ -8,3 +8,4 @@ const RestartButton = ({dispatch}) =>
   </button>
 
 export default connect()(RestartButton)
+

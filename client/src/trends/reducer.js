@@ -2,7 +2,7 @@ import {
 //  START_NEW_GAME_SUCCESS,
   ADD_TEAM_SUCCESS,
   FETCH_TEAMS_SUCCESS
-} from '../actions'
+} from './actionCreators'
 
 const initialState = {}
 
@@ -27,3 +27,4 @@ export default (state=initialState, action) => {
       return state
   }
 }
+

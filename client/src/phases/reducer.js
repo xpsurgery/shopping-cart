@@ -1,4 +1,5 @@
-import { START_NEW_GAME_SUCCESS, PLAY_SUCCESS, CEASE_SUCCESS } from '../actions'
+import { START_NEW_GAME_SUCCESS } from './actionCreators'
+import { PLAY_SUCCESS, CEASE_SUCCESS } from '../trends/actionCreators'
 
 export default (state=null, action) => {
   switch (action.type) {

@@ -1,4 +1,4 @@
-import { API_CALL } from './app/middleware/api'
+import { API_CALL } from '../app/middleware/api'
 
 export const PLAY_REQUEST = 'PLAY_REQUEST'
 export const PLAY_SUCCESS = 'PLAY_SUCCESS'
