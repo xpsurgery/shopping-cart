@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Header from './Header'
-import AddTeams from './AddTeams'
-import PlayGame from './PlayGame'
-import Analyse from './Analyse'
+import AddTeams from '../teams/AddTeams'
+import PlayGame from '../trends/PlayGame'
+import Analyse from '../trends/Analyse'
 import { startNewGame } from '../actions'
 
 const Game = React.createClass({
@@ -38,3 +38,4 @@ const mapStateToProps = (state) => ({
 })
 
 export default connect(mapStateToProps)(Game)
+

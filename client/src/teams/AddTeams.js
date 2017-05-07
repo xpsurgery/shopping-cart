@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import StartButton from './StartButton'
+import StartButton from '../trends/StartButton'
 import AddTeam from './AddTeam'
 
 const AddTeams = ({ teams }) =>
@@ -41,3 +41,4 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps)(AddTeams)
+
