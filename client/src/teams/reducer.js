@@ -1,15 +1,11 @@
 import { ADD_TEAM_SUCCESS } from './actionCreators'
 
-let initialState = [
-  { id: 2, name: 'gym', colour: "#49078d", balance: 105463 },
-  { id: 1, name: 'fred', colour: "#23fe4d", balance: 105463 },
-  { id: 3, name: 'suup', colour: "#1fffe4", balance: 105463 }
-]
+const teams_in = (hash) => Object.keys(hash).map(key => hash[key])
 
-export default (state=initialState, action) => {
+export default (state=[], action) => {
   switch (action.type) {
     case ADD_TEAM_SUCCESS:
-      return Object.keys(action.response.teams).map(key => action.response.teams[key])
+      return teams_in(action.response.teams)
 
     default:
       return state
