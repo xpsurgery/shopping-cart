@@ -14,7 +14,7 @@ const AddTeam = React.createClass({
   },
 
   add: function() {
-    this.props.dispatch(addTeam(this.state.value))
+    this.props.addTeam(this.state.value)
     this.setState({value: ''})
   },
 
@@ -28,5 +28,5 @@ const AddTeam = React.createClass({
   }
 })
 
-export default connect()(AddTeam)
+export default connect(null, { addTeam })(AddTeam)
 
