@@ -12,7 +12,7 @@ RSpec.describe 'Game#add_team' do
 
     [ nil, '', ' ' ].each do |bad_name|
       example "team '#{bad_name}' is not added" do
-        expect(subject.add_team(bad_name)).to be false
+        expect(subject.add_team(bad_name)[0]).to eq(400)
         expect(subject.status.teams.length).to eq(1)
       end
     end
@@ -21,7 +21,7 @@ RSpec.describe 'Game#add_team' do
 
   context 'with a name that has already been used' do
     example 'the team is not added' do
-      expect(subject.add_team('Team X')).to be false
+      expect(subject.add_team('Team X')[0]).to eq(400)
       expect(subject.status.teams.length).to eq(1)
     end
   end
@@ -30,7 +30,7 @@ RSpec.describe 'Game#add_team' do
     let(:teams) { subject.status.teams }
 
     before do
-      expect(subject.add_team('Team Y')).to be true
+      expect(subject.add_team('Team Y')[0]).to eq(200)
     end
 
     example 'the team is added' do
@@ -43,7 +43,6 @@ RSpec.describe 'Game#add_team' do
     end
 
     example 'the team has a balance of zero' do
-      pending
       expect(teams['Team Y'].cash_balance).to eq(0)
     end
 

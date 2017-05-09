@@ -41,9 +41,9 @@ RSpec.describe 'Completing challenges' do
   subject { Game.new }
 
   before do
-    subject.setup(new_config)
     subject.add_team('Team A')
     subject.add_team('Team B')
+    subject.configure(new_config)
   end
 
   context 'when we are playing' do

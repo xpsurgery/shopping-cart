@@ -15,9 +15,9 @@ RSpec.describe 'Running payroll' do
     }
 
     before do
-      subject.setup(new_config)
       subject.add_team('Team A')
       subject.add_team('Team B')
+      subject.configure(new_config)
       subject.run_payroll
     end
 

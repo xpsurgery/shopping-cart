@@ -6,29 +6,40 @@ require_relative './randomiser'
 class Game
 
   def initialize
-    @config = Config::DEFAULTS
-    setup(Config::DEFAULTS)
-    @challenges = Hashie::Mash.new
+    start
   end
 
-  def setup(config)
-    @config = @config.merge(config)
-    @phase = :setup
+  def start
+    return [400, {errors: 'Action not permitted at this time'}] if @phase == :playing
+    @config = Config::DEFAULTS
     @teams = Hashie::Mash.new
+    @challenges = Hashie::Mash.new
+    @phase = :setup
+    [200, status]
   end
 
   def add_team(name)
-    return false unless @phase == :setup
-    return false unless name
-    name = name.strip
-    return false if name.empty?
-    return false if @teams.has_key?(name)
+    errors = []
+    errors << 'Action not permitted at this time' unless @phase == :setup
+    errors << 'Please supply a team name' unless name && name.strip.length > 0
+    errors << "Team name '#{name}' already in use" if @teams.has_key?(name)
+    return [400, {errors: errors}] unless errors.empty?
     @teams[name] = Hashie::Mash.new({
       id:           @teams.keys.length + 1,
       name:         name,
-      cash_balance: @config.initial_balance
+      cash_balance: 0
     })
-    true
+    [200, status]
+  end
+
+  def configure(config)
+    return [400, {errors: 'Action not permitted at this time'}] unless [:setup, :ready].include?(@phase)
+    @config = @config.merge(config)
+    @teams.each do |_, team|
+      team.cash_balance = @config.initial_balance
+    end
+    @phase = :ready
+    [200]
   end
 
   def run_payroll
@@ -38,6 +49,7 @@ class Game
   end
 
   def play(run_payroll  = true)
+    return [400, {errors: 'Action not permitted at this time'}] unless [:ready, :paused].include?(@phase)
     if run_payroll
       @payroll_thread = Thread.new do
         loop do
@@ -47,6 +59,7 @@ class Game
       end
     end
     @phase = :playing
+    [200, status]
   end
 
   def issue(timestamp = Time.now)
@@ -142,8 +155,10 @@ class Game
   end
 
   def pause
+    return [400, {errors: 'Action not permitted at this time'}] unless @phase == :playing
     @payroll_thread.kill if @payroll_thread
-    @phase = :analysing
+    @phase = :paused
+    [200, status]
   end
 
   def status

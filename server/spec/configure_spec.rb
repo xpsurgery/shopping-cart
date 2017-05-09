@@ -4,7 +4,7 @@ require_relative '../config'
 RSpec.describe 'Preparing to play' do
   subject { Game.new }
 
-  describe 'Before setup has been called' do
+  describe 'Before configure has been called' do
 
     example 'there are no teams' do
       expect(subject.status.teams).to be_empty
@@ -20,7 +20,7 @@ RSpec.describe 'Preparing to play' do
 
   end
 
-  describe 'After setup has been called' do
+  describe 'After configure has been called' do
     let(:new_balance) { 50 }
     let(:new_config) {
       {
@@ -29,15 +29,15 @@ RSpec.describe 'Preparing to play' do
     }
 
     before do
-      subject.setup(new_config)
+      subject.configure(new_config)
     end
 
     example 'there are no teams' do
       expect(subject.status.teams).to be_empty
     end
 
-    example 'the game is in the setup phase' do
-      expect(subject.status.phase).to eq(:setup)
+    example 'the game is in the ready phase' do
+      expect(subject.status.phase).to eq(:ready)
     end
 
     example 'the game is using the new config' do
