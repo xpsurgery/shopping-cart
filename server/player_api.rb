@@ -20,8 +20,8 @@ module PlayerApi
       begin
         payload = Hashie::Mash.new(JSON.parse(request.body.read, symbolize_names: true))
         app.settings.game.answer(params[:id], payload,
-          lambda {|resp| [400, JSON.pretty_generate(resp)] },
-          lambda {|resp| [200, JSON.pretty_generate(resp)] })
+          -> resp { [400, JSON.pretty_generate(resp)] },
+          -> errors { [200, JSON.pretty_generate(errors)] })
       rescue JSON::ParserError
         [400, JSON.pretty_generate({
           error: 'Your response must be valid JSON'

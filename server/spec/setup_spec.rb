@@ -45,20 +45,6 @@ RSpec.describe 'Preparing to play' do
       expect(subject.status.config.payroll).to eq(Config::DEFAULTS.payroll)
     end
 
-    describe 'When teams are added' do
-
-      before do
-        subject.add_team('Team A')
-        subject.add_team('Team B')
-      end
-
-      example 'their initial balances match the config' do
-        expect(subject.status.teams['Team A'].cash_balance).to eq(new_balance)
-        expect(subject.status.teams['Team B'].cash_balance).to eq(new_balance)
-      end
-
-    end
-
   end
 
 end

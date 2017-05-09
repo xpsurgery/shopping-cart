@@ -27,13 +27,24 @@ RSpec.describe 'Game#add_team' do
   end
 
   context 'with a valid unique name' do
+    let(:teams) { subject.status.teams }
 
-    example 'the team is added with a unique id' do
+    before do
       expect(subject.add_team('Team Y')).to be true
-      teams = subject.status.teams
+    end
+
+    example 'the team is added' do
       expect(teams.length).to eq(2)
       expect(teams['Team Y'].name).to eq('Team Y')
+    end
+
+    example 'the team has a unique id' do
       expect(teams['Team Y'].id).to_not eq(teams['Team X'].id)
+    end
+
+    example 'the team has a balance of zero' do
+      pending
+      expect(teams['Team Y'].cash_balance).to eq(0)
     end
 
   end
