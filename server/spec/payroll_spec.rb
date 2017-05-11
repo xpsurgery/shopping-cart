@@ -15,8 +15,8 @@ RSpec.describe 'Running payroll' do
     }
 
     before do
-      subject.add_team('Team A')
-      subject.add_team('Team B')
+      subject.add_team({name: 'TeamA'})
+      subject.add_team({name: 'TeamB'})
       subject.configure(new_config)
       subject.run_payroll
     end
@@ -25,8 +25,8 @@ RSpec.describe 'Running payroll' do
 
       example 'their balances are reduced' do
         teams = subject.status.teams
-        expect(teams['Team A'].cash_balance).to eq(15)
-        expect(teams['Team B'].cash_balance).to eq(15)
+        expect(teams['TeamA'].cash_balance).to eq(15)
+        expect(teams['TeamB'].cash_balance).to eq(15)
       end
     end
 
@@ -34,8 +34,8 @@ RSpec.describe 'Running payroll' do
       example 'their balance sticks at zero' do
         subject.run_payroll
         teams = subject.status.teams
-        expect(teams['Team A'].cash_balance).to eq(0)
-        expect(teams['Team B'].cash_balance).to eq(0)
+        expect(teams['TeamA'].cash_balance).to eq(0)
+        expect(teams['TeamB'].cash_balance).to eq(0)
       end
     end
 

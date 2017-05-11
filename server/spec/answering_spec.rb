@@ -41,8 +41,8 @@ RSpec.describe 'Completing challenges' do
   subject { Game.new }
 
   before do
-    subject.add_team('Team A')
-    subject.add_team('Team B')
+    subject.add_team({name: 'TeamA'})
+    subject.add_team({name: 'TeamB'})
     subject.configure(new_config)
   end
 
@@ -55,7 +55,7 @@ RSpec.describe 'Completing challenges' do
     context 'but there was no such challenge' do
 
       example 'an error is returned' do
-        payload = Hashie::Mash.new({ teamName: 'Team B' })
+        payload = Hashie::Mash.new({ teamName: 'TeamB' })
         expect_errors('0', payload, "No challenge with id 0 has been issued")
       end
 
@@ -77,8 +77,8 @@ RSpec.describe 'Completing challenges' do
         context 'an unknown team name' do
 
           example 'an error is returned' do
-            payload = Hashie::Mash.new({ teamName: 'Team X' })
-            expect_errors('0', payload, "Unknown team 'Team X'")
+            payload = Hashie::Mash.new({ teamName: 'TeamX' })
+            expect_errors('0', payload, "Unknown team 'TeamX'")
           end
 
         end
@@ -86,7 +86,7 @@ RSpec.describe 'Completing challenges' do
         context 'no answer' do
 
           example 'an error is returned' do
-            payload = Hashie::Mash.new({ teamName: 'Team B' })
+            payload = Hashie::Mash.new({ teamName: 'TeamB' })
             expect_errors(challenge.id, payload, "Please supply an answer to the challenge")
           end
 
@@ -96,7 +96,7 @@ RSpec.describe 'Completing challenges' do
           let(:issued_at) { Time.now - 200 }
           let(:answer) {
             Hashie::Mash.new({
-              teamName: 'Team B'
+              teamName: 'TeamB'
             })
           }
 
@@ -107,7 +107,7 @@ RSpec.describe 'Completing challenges' do
           example 'the team is fined' do
             errors = {}
             subject.answer(challenge.id, answer, lambda {}, lambda{|_|})
-            expect(subject.status.teams['Team B'].cash_balance).to eq(4900)
+            expect(subject.status.teams['TeamB'].cash_balance).to eq(4900)
           end
 
         end
@@ -115,7 +115,7 @@ RSpec.describe 'Completing challenges' do
         context 'everything correct' do
           let(:answer) {
             Hashie::Mash.new({
-              teamName: 'Team B',
+              teamName: 'TeamB',
               answer: challenge.valid_responses.correct
             })
           }
@@ -130,14 +130,14 @@ RSpec.describe 'Completing challenges' do
 
           example 'the team earns commission' do
             subject.answer(challenge.id, answer, lambda {|_|}, lambda{|_|})
-            expect(subject.status.teams['Team B'].cash_balance).to eq(5800)
+            expect(subject.status.teams['TeamB'].cash_balance).to eq(5800)
           end
         end
 
         context 'tax but no discount' do
           let(:answer) {
             Hashie::Mash.new({
-              teamName: 'Team B',
+              teamName: 'TeamB',
               answer: challenge.valid_responses.tax_but_no_discount
             })
           }
@@ -153,14 +153,14 @@ RSpec.describe 'Completing challenges' do
 
           example 'the team earns commission' do
             subject.answer(challenge.id, answer, lambda {|_|}, lambda{|_|})
-            expect(subject.status.teams['Team B'].cash_balance).to eq(5455)
+            expect(subject.status.teams['TeamB'].cash_balance).to eq(5455)
           end
         end
 
         context 'discount but no tax' do
           let(:answer) {
             Hashie::Mash.new({
-              teamName: 'Team B',
+              teamName: 'TeamB',
               answer: challenge.valid_responses.discount_but_no_tax
             })
           }
@@ -176,14 +176,14 @@ RSpec.describe 'Completing challenges' do
 
           example 'the team earns commission' do
             subject.answer(challenge.id, answer, lambda {|_|}, lambda{|_|})
-            expect(subject.status.teams['Team B'].cash_balance).to eq(5452)
+            expect(subject.status.teams['TeamB'].cash_balance).to eq(5452)
           end
         end
 
         context 'neither tax nor discount' do
           let(:answer) {
             Hashie::Mash.new({
-              teamName: 'Team B',
+              teamName: 'TeamB',
               answer: challenge.valid_responses.no_tax_or_discount
             })
           }
@@ -200,14 +200,14 @@ RSpec.describe 'Completing challenges' do
 
           example 'the team earns commission' do
             subject.answer(challenge.id, answer, lambda {|_|}, lambda{|_|})
-            expect(subject.status.teams['Team B'].cash_balance).to eq(5107)
+            expect(subject.status.teams['TeamB'].cash_balance).to eq(5107)
           end
         end
 
         context 'an unfathomable answer' do
           let(:answer) {
             Hashie::Mash.new({
-              teamName: 'Team B',
+              teamName: 'TeamB',
               answer: 0
             })
           }
@@ -219,7 +219,7 @@ RSpec.describe 'Completing challenges' do
           example 'the team is fined' do
             errors = {}
             subject.answer(challenge.id, answer, lambda {|_|}, lambda{|_|})
-            expect(subject.status.teams['Team B'].cash_balance).to eq(4654)
+            expect(subject.status.teams['TeamB'].cash_balance).to eq(4654)
           end
         end
 

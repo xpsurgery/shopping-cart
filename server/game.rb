@@ -18,9 +18,10 @@ class Game
     [200, status]
   end
 
-  def add_team(name)
+  def add_team(details)
     errors = []
     errors << 'Action not permitted at this time' unless @phase == :setup
+    name = details[:name]
     errors << 'Please supply a team name' unless name && name.strip.length > 0
     errors << "Team name '#{name}' already in use" if @teams.has_key?(name)
     return [400, {errors: errors}] unless errors.empty?

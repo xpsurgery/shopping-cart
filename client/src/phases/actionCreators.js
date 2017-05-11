@@ -6,7 +6,7 @@ export const START_NEW_GAME_FAILURE = 'START_NEW_GAME_FAILURE'
 
 export const startNewGame = () => ({
   type: API_CALL,
-  endpoint: '/setup',
+  endpoint: '/start',
   method: 'post',
   onRequest: START_NEW_GAME_REQUEST,
   onSuccess: START_NEW_GAME_SUCCESS,

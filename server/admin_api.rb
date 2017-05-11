@@ -14,7 +14,7 @@ module AdminApi
       content_type :json
       request.body.rewind
       payload = JSON.parse(request.body.read.strip, symbolize_names: true)
-      result = app.settings.game.add_team(payload[:name])
+      result = app.settings.game.add_team(payload)
       [result[0], JSON.pretty_generate(result[1].merge({self: request.fullpath}))]
     end
 
