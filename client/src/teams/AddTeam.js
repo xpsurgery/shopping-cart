@@ -6,7 +6,7 @@ const AddTeam = React.createClass({
 
   keyDown: function(e) {
     if (e.key === 'Enter')
-      this.props.addTeam(e.target.value)
+      this.props.addTeam(e.target.value, '#4fe530')
   },
 
   render: function() {
