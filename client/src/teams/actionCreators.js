@@ -21,7 +21,8 @@ export const addTeam = (name) => ({
   endpoint: '/teams',
   method: 'post',
   body: {
-    name: name
+    name: name,
+    colour: '#ff0000'
   },
   onRequest: ADD_TEAM_REQUEST,
   onSuccess: ADD_TEAM_SUCCESS,

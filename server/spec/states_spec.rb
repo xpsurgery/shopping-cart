@@ -11,7 +11,7 @@ RSpec.describe 'Game state machine' do
     end
 
     example 'add_team is valid' do
-      expect(subject.add_team({name: 'fred'})[0]).to eq(200)
+      expect(subject.add_team({name: 'fred', colour: '#f00'})[0]).to eq(200)
     end
 
     example 'configure is valid' do
@@ -31,7 +31,7 @@ RSpec.describe 'Game state machine' do
   context 'when the current phase is :ready' do
 
     before do
-      subject.add_team({name: 'fred'})
+      subject.add_team({name: 'fred', colour: '#f00'})
       subject.configure(Config::DEFAULTS)
     end
 
@@ -40,7 +40,7 @@ RSpec.describe 'Game state machine' do
     end
 
     example 'add_team is not valid' do
-      expect(subject.add_team({name: 'joe'})[0]).to eq(400)
+      expect(subject.add_team({name: 'joe', colour: '#f00'})[0]).to eq(400)
     end
 
     example 'configure is valid' do
@@ -60,7 +60,7 @@ RSpec.describe 'Game state machine' do
   context 'when the current phase is :playing' do
 
     before do
-      subject.add_team({name: 'fred'})
+      subject.add_team({name: 'fred', colour: '#f00'})
       subject.configure(Config::DEFAULTS)
       subject.play(false)
     end
@@ -70,7 +70,7 @@ RSpec.describe 'Game state machine' do
     end
 
     example 'add_team is not valid' do
-      expect(subject.add_team({name: 'joe'})[0]).to eq(400)
+      expect(subject.add_team({name: 'joe', colour: '#f00'})[0]).to eq(400)
     end
 
     example 'configure is not valid' do
@@ -90,7 +90,7 @@ RSpec.describe 'Game state machine' do
   context 'when the current phase is :paused' do
 
     before do
-      subject.add_team({name: 'fred'})
+      subject.add_team({name: 'fred', colour: '#f00'})
       subject.configure(Config::DEFAULTS)
       subject.play(false)
       subject.pause
@@ -101,7 +101,7 @@ RSpec.describe 'Game state machine' do
     end
 
     example 'add_team is not valid' do
-      expect(subject.add_team({name: 'joe'})[0]).to eq(400)
+      expect(subject.add_team({name: 'joe', colour: '#f00'})[0]).to eq(400)
     end
 
     example 'configure is not valid' do

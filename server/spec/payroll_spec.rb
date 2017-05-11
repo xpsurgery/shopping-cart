@@ -15,8 +15,8 @@ RSpec.describe 'Running payroll' do
     }
 
     before do
-      subject.add_team({name: 'TeamA'})
-      subject.add_team({name: 'TeamB'})
+      subject.add_team({name: 'TeamA', colour: '#f00'})
+      subject.add_team({name: 'TeamB', colour: '#f00'})
       subject.configure(new_config)
       subject.run_payroll
     end

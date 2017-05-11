@@ -41,8 +41,8 @@ RSpec.describe 'Completing challenges' do
   subject { Game.new }
 
   before do
-    subject.add_team({name: 'TeamA'})
-    subject.add_team({name: 'TeamB'})
+    subject.add_team({name: 'TeamA', colour: '#f00'})
+    subject.add_team({name: 'TeamB', colour: '#f00'})
     subject.configure(new_config)
   end
 

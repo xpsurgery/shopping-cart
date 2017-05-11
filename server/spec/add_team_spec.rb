@@ -5,7 +5,7 @@ RSpec.describe 'Game#add_team' do
   subject { Game.new }
 
   before do
-    subject.add_team({name: 'Team X'})
+    subject.add_team({name: 'Team X', colour: '#f00'})
   end
 
   context 'with an invalid name' do
@@ -21,7 +21,7 @@ RSpec.describe 'Game#add_team' do
 
   context 'with a name that has already been used' do
     example 'the team is not added' do
-      expect(subject.add_team({name: 'Team X'})[0]).to eq(400)
+      expect(subject.add_team({name: 'Team X', colour: '#f00'})[0]).to eq(400)
       expect(subject.status.teams.length).to eq(1)
     end
   end
@@ -30,7 +30,7 @@ RSpec.describe 'Game#add_team' do
     let(:teams) { subject.status.teams }
 
     before do
-      expect(subject.add_team({name: 'Team Y'})[0]).to eq(200)
+      expect(subject.add_team({name: 'Team Y', colour: '#f00'})[0]).to eq(200)
     end
 
     example 'the team is added' do

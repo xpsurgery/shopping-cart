@@ -24,10 +24,13 @@ class Game
     name = details[:name]
     errors << 'Please supply a team name' unless name && name.strip.length > 0
     errors << "Team name '#{name}' already in use" if @teams.has_key?(name)
+    colour = details[:colour]
+    errors << 'Please supply a team colour' unless colour && colour.strip.length > 0
     return [400, {errors: errors}] unless errors.empty?
     @teams[name] = Hashie::Mash.new({
       id:           @teams.keys.length + 1,
       name:         name,
+      colour:       colour,
       cash_balance: 0
     })
     [200, status]
