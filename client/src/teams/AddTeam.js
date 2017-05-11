@@ -1,12 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { addTeam } from './actionCreators'
+import mapStateToProps from './prepareAddTeam'
 
 const AddTeam = React.createClass({
 
   keyDown: function(e) {
     if (e.key === 'Enter')
-      this.props.addTeam(e.target.value, '#4fe530')
+      this.props.addTeam(e.target.value, this.props.colour)
   },
 
   render: function() {
@@ -18,5 +19,5 @@ const AddTeam = React.createClass({
   }
 })
 
-export default connect(null, { addTeam })(AddTeam)
+export default connect(mapStateToProps, { addTeam })(AddTeam)
 
