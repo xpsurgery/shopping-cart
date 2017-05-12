@@ -43,7 +43,7 @@ class Game
       team.cash_balance = @config.initial_balance
     end
     @phase = :ready
-    [200]
+    [200, status]
   end
 
   def run_payroll
