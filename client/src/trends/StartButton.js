@@ -1,11 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { play } from './actionCreators'
+import { configure } from './actionCreators'
 
-const StartButton = ({dispatch}) =>
-  <button className='btn btn-primary' onClick={() => dispatch(play())}>
+const StartButton = ({ configure }) =>
+  <button className='btn btn-primary' onClick={() => configure()}>
     Start!
   </button>
 
-export default connect()(StartButton)
+export default connect(undefined, { configure })(StartButton)
 
