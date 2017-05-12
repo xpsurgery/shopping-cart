@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { addTeam } from './actionCreators'
-import mapStateToProps from './prepareAddTeam'
+import { nextAvailableColour } from './reducer'
 
 const AddTeam = React.createClass({
 
@@ -17,6 +17,10 @@ const AddTeam = React.createClass({
       </div>
     )
   }
+})
+
+const mapStateToProps = ({ teams }) => ({
+  colour: nextAvailableColour(teams)
 })
 
 export default connect(mapStateToProps, { addTeam })(AddTeam)
