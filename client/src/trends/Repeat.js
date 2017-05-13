@@ -19,3 +19,4 @@ const Repeat = React.createClass({
 })
 
 export default connect()(Repeat)
+
