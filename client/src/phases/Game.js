@@ -26,8 +26,20 @@ const Game = React.createClass({
   }
 })
 
+const phaseComponent = (phase) => {
+  switch (phase) {
+    case 'setup':
+      return <SetupPage />
+    case 'playing':
+    case 'paused':
+      return <PlayingPage />
+    default:
+      return (<div> Spinner! </div>)
+  }
+}
+
 const mapStateToProps = ({ phase }) => ({
-  phase: (phase === 'setup' ? <SetupPage /> : <PlayingPage />)
+  phase: phaseComponent(phase)
 })
 
 export default connect(mapStateToProps)(Game)

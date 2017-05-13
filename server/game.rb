@@ -37,12 +37,12 @@ class Game
   end
 
   def configure(config)
-    return [400, {errors: 'Action not permitted at this time'}] unless [:setup, :ready].include?(@phase)
+    return [400, {errors: 'Action not permitted at this time'}] unless @phase == :setup
     @config = @config.merge(config)
     @teams.each do |_, team|
       team.cash_balance = @config.initial_balance
     end
-    @phase = :ready
+    @phase = :paused
     [200, status]
   end
 
@@ -53,7 +53,7 @@ class Game
   end
 
   def play(run_payroll  = true)
-    return [400, {errors: 'Action not permitted at this time'}] unless [:ready, :paused].include?(@phase)
+    return [400, {errors: 'Action not permitted at this time'}] unless @phase == :paused
     if run_payroll
       @payroll_thread = Thread.new do
         loop do

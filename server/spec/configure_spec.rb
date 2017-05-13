@@ -37,7 +37,7 @@ RSpec.describe 'Preparing to play' do
     end
 
     example 'the game is in the ready phase' do
-      expect(subject.status.phase).to eq(:ready)
+      expect(subject.status.phase).to eq(:paused)
     end
 
     example 'the game is using the new config' do
