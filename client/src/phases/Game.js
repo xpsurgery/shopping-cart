@@ -1,9 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Header from './Header'
-import Setup from '../teams/Setup'
-import PlayGame from '../trends/PlayGame'
-import Analyse from '../trends/Analyse'
+import SetupPage from '../teams/SetupPage'
+import PlayingPage from '../trends/PlayingPage'
 import { startNewGame } from './actionCreators'
 
 const Game = React.createClass({
@@ -27,14 +26,8 @@ const Game = React.createClass({
   }
 })
 
-const phaseDisplays = {
-  'setup':     <Setup />,
-  'playing':   <PlayGame />,
-  'analysing': <Analyse />
-}
-
-const mapStateToProps = (state) => ({
-  phase: phaseDisplays[state.phase]
+const mapStateToProps = ({ phase }) => ({
+  phase: (phase === 'setup' ? <SetupPage /> : <PlayingPage />)
 })
 
 export default connect(mapStateToProps)(Game)
