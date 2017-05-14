@@ -1,10 +1,12 @@
 .teams {
 
   .team-summary {
-    padding: 16px;
+    padding: 0;
     width: 100%;
-    font-size: 250%;
-    colour: #555;
+    border-radius: 0.8em;
+    border-width: 0.25em;
+    border-style: solid;
+    margin-bottom: 16px;
 
     .team-name {
       display: inline-block;
@@ -19,9 +21,23 @@
 
     .team-balance {
       display: inline-block;
+      text-align: right;
+      padding-right: 16px;
       width: 20%;
     }
 
+  }
+
+}
+
+.add-team {
+
+  input {
+    width: 64%;
+    border-radius: 0.8em;
+    border-width: 0.25em;
+    border-style: solid;
+    padding-left: 16px;
   }
 
 }
