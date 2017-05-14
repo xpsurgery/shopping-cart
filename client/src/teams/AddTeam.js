@@ -12,7 +12,7 @@ const AddTeam = React.createClass({
 
   render: function() {
     return (
-      <div>
+      <div className='add-team'>
         <input type='text' onKeyDown={this.keyDown} />
       </div>
     )
