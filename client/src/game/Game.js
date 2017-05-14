@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Header from './Header'
-import SetupPage from '../teams/SetupPage'
-import PlayingPage from '../trends/PlayingPage'
+import SetupPage from '../setup/SetupPage'
+import PlayingPage from '../play/PlayingPage'
 import { startNewGame } from './actionCreators'
 
 const Game = React.createClass({

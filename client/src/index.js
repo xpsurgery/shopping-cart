@@ -9,7 +9,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import configureStore from './app/store'
-import Game from './phases/Game'
+import Game from './game/Game'
 
 const store = configureStore()
 

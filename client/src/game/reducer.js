@@ -1,5 +1,6 @@
 import { START_NEW_GAME_SUCCESS } from './actionCreators'
-import { CONFIGURE_SUCCESS, PLAY_SUCCESS, CEASE_SUCCESS } from '../trends/actionCreators'
+import { CONFIGURE_SUCCESS } from '../setup/actionCreators'
+import { PLAY_SUCCESS, CEASE_SUCCESS } from '../play/actionCreators'
 
 export default (state='fetching', action) => {
   switch (action.type) {

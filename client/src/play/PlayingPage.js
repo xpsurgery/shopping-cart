@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Repeat from './Repeat'
 import Teams from '../teams/Teams'
-import Balances from './Balances'
+import Balances from '../trends/Balances'
 import StopButton from './StopButton'
 import { fetchTeams } from './actionCreators'
 

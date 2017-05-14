@@ -1,7 +1,7 @@
 import React from 'react'
-import StartButton from '../trends/StartButton'
-import AddTeam from './AddTeam'
-import Teams from './Teams'
+import StartButton from './StartButton'
+import AddTeam from '../teams/AddTeam'
+import Teams from '../teams/Teams'
 
 const Setup = () =>
   <div>
