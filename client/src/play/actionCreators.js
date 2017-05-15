@@ -13,16 +13,16 @@ export const play = () => ({
   onFailure: PLAY_FAILURE
 })
 
-export const CEASE_REQUEST = 'CEASE_REQUEST'
-export const CEASE_SUCCESS = 'CEASE_SUCCESS'
-export const CEASE_FAILURE = 'CEASE_FAILURE'
+export const PAUSE_REQUEST = 'PAUSE_REQUEST'
+export const PAUSE_SUCCESS = 'PAUSE_SUCCESS'
+export const PAUSE_FAILURE = 'PAUSE_FAILURE'
 
-export const cease = () => ({
+export const pause = () => ({
   type: API_CALL,
-  endpoint: '/cease',
+  endpoint: '/pause',
   method: 'post',
-  onRequest: CEASE_REQUEST,
-  onSuccess: CEASE_SUCCESS,
-  onFailure: CEASE_FAILURE
+  onRequest: PAUSE_REQUEST,
+  onSuccess: PAUSE_SUCCESS,
+  onFailure: PAUSE_FAILURE
 })
 
