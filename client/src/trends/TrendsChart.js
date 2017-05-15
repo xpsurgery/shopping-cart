@@ -26,9 +26,9 @@ var lineChart = {
   }
 }
 
-const BalancesHistoryChart = ({ dataSeries }) => {
+const TrendsChart = ({ dataSeries }) => {
   return (
-    <div className='inset form-submission-history-chart'>
+    <div className='trends-chart'>
       <ReactHighcharts config={{
         ...lineChart,
         series: dataSeries
@@ -37,8 +37,9 @@ const BalancesHistoryChart = ({ dataSeries }) => {
   )
 }
 
-BalancesHistoryChart.propTypes = {
+TrendsChart.propTypes = {
   dataSeries: React.PropTypes.array
 }
 
-export default BalancesHistoryChart
+export default TrendsChart
+
