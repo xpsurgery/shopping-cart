@@ -52,9 +52,9 @@ class Game
     end
   end
 
-  def play(run_payroll  = true)
+  def play(should_run_payroll=true)
     return [400, {errors: 'Action not permitted at this time'}] unless @phase == :paused
-    if run_payroll
+    if should_run_payroll
       @payroll_thread = Thread.new do
         loop do
           sleep @config.payroll.interval_secs
