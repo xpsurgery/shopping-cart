@@ -3,7 +3,7 @@
 
 curl -X POST http://localhost:17171/start
 curl -X POST -d '{ "name": "fred" }' http://localhost:17171/teams
-curl -X POST -d '{"initial_balance": 30}' http://localhost:17171/configure
+curl -X POST -d '{"initialBalance": 30}' http://localhost:17171/configure
 curl -X POST http://localhost:17171/play
 
 resp=`curl http://localhost:17171/challenge`

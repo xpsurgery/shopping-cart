@@ -2,15 +2,15 @@ import React from 'react'
 import StartButton from './StartButton'
 
 const easyConfig = {
-  initial_balance: 1000000
+  initialBalance: 1000000
 }
 
 const hardConfig = {
-  initial_balance: 100000
+  initialBalance: 100000
 }
 
 const impossibleConfig = {
-  initial_balance: 50000
+  initialBalance: 50000
 }
 
 const ChooseLevel = () =>

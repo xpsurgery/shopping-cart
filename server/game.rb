@@ -31,7 +31,7 @@ class Game
       id:           @teams.keys.length + 1,
       name:         name,
       colour:       colour,
-      cash_balance: 0
+      cashBalance: 0
     })
     [200, status]
   end
@@ -40,7 +40,7 @@ class Game
     return [400, {errors: 'Action not permitted at this time'}] unless @phase == :setup
     @config = @config.merge(config)
     @teams.each do |_, team|
-      team.cash_balance = @config.initial_balance
+      team.cashBalance = @config.initialBalance
     end
     @phase = :paused
     [200, status]
@@ -48,7 +48,7 @@ class Game
 
   def run_payroll
     @teams.each do |_, team|
-      team.cash_balance = [team.cash_balance - @config.payroll.wage_bill, 0].max
+      team.cashBalance = [team.cashBalance - @config.payroll.wage_bill, 0].max
     end
   end
 
@@ -100,7 +100,7 @@ class Game
 
     if Time.now >= challenge.challenge.expiresAt
       penalty = @config.sales.penalty_for_late_attempt
-      team.cash_balance = team.cash_balance - penalty
+      team.cashBalance = team.cashBalance - penalty
       result.errors = ["Challenge #{id} has timed out"]
       result.penalties = { challengeExpired: penalty }
       return on_error.call(result)
@@ -115,7 +115,7 @@ class Game
 
     if payload.answer == valid_responses.correct
       commission = @config.sales.commission
-      team.cash_balance = team.cash_balance + commission
+      team.cashBalance = team.cashBalance + commission
       result.income = commission
       return on_success.call(result)
     end
@@ -123,7 +123,7 @@ class Game
     if payload.answer == valid_responses.tax_but_no_discount
       commission = @config.sales.commission
       penalty = @config.sales.penalty_for_missing_discount
-      team.cash_balance = team.cash_balance + commission - penalty
+      team.cashBalance = team.cashBalance + commission - penalty
       result.income = commission
       result.penalties = { missing_discount: penalty }
       return on_success.call(result)
@@ -132,7 +132,7 @@ class Game
     if payload.answer == valid_responses.discount_but_no_tax
       commission = @config.sales.commission
       penalty = @config.sales.penalty_for_missing_tax
-      team.cash_balance = team.cash_balance + commission - penalty
+      team.cashBalance = team.cashBalance + commission - penalty
       result.income = commission
       result.penalties = { missing_tax: penalty }
       return on_success.call(result)
@@ -142,7 +142,7 @@ class Game
       commission = @config.sales.commission
       penalty1 = @config.sales.penalty_for_missing_tax
       penalty2 = @config.sales.penalty_for_missing_discount
-      team.cash_balance = team.cash_balance + commission - penalty1 - penalty2
+      team.cashBalance = team.cashBalance + commission - penalty1 - penalty2
       result.income = commission
       result.penalties = {
         missing_tax: penalty1,
@@ -152,7 +152,7 @@ class Game
     end
 
     penalty = @config.sales.penalty_for_incorrect
-    team.cash_balance = team.cash_balance - penalty
+    team.cashBalance = team.cashBalance - penalty
     result.errors = ['Incorrect answer']
     result.penalties = { incorrectAnswer: penalty }
     return on_error.call(result)

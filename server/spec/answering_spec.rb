@@ -12,7 +12,7 @@ RSpec.describe 'Completing challenges' do
   let(:new_balance) { 5000 }
   let(:new_config) {
     {
-      initial_balance: new_balance,
+      initialBalance: new_balance,
       payroll: {
         wage_bill: 35
       },
@@ -107,7 +107,7 @@ RSpec.describe 'Completing challenges' do
           example 'the team is fined' do
             errors = {}
             subject.answer(challenge.id, answer, lambda {}, lambda{|_|})
-            expect(subject.status.teams['TeamB'].cash_balance).to eq(4900)
+            expect(subject.status.teams['TeamB'].cashBalance).to eq(4900)
           end
 
         end
@@ -130,7 +130,7 @@ RSpec.describe 'Completing challenges' do
 
           example 'the team earns commission' do
             subject.answer(challenge.id, answer, lambda {|_|}, lambda{|_|})
-            expect(subject.status.teams['TeamB'].cash_balance).to eq(5800)
+            expect(subject.status.teams['TeamB'].cashBalance).to eq(5800)
           end
         end
 
@@ -153,7 +153,7 @@ RSpec.describe 'Completing challenges' do
 
           example 'the team earns commission' do
             subject.answer(challenge.id, answer, lambda {|_|}, lambda{|_|})
-            expect(subject.status.teams['TeamB'].cash_balance).to eq(5455)
+            expect(subject.status.teams['TeamB'].cashBalance).to eq(5455)
           end
         end
 
@@ -176,7 +176,7 @@ RSpec.describe 'Completing challenges' do
 
           example 'the team earns commission' do
             subject.answer(challenge.id, answer, lambda {|_|}, lambda{|_|})
-            expect(subject.status.teams['TeamB'].cash_balance).to eq(5452)
+            expect(subject.status.teams['TeamB'].cashBalance).to eq(5452)
           end
         end
 
@@ -200,7 +200,7 @@ RSpec.describe 'Completing challenges' do
 
           example 'the team earns commission' do
             subject.answer(challenge.id, answer, lambda {|_|}, lambda{|_|})
-            expect(subject.status.teams['TeamB'].cash_balance).to eq(5107)
+            expect(subject.status.teams['TeamB'].cashBalance).to eq(5107)
           end
         end
 
@@ -219,7 +219,7 @@ RSpec.describe 'Completing challenges' do
           example 'the team is fined' do
             errors = {}
             subject.answer(challenge.id, answer, lambda {|_|}, lambda{|_|})
-            expect(subject.status.teams['TeamB'].cash_balance).to eq(4654)
+            expect(subject.status.teams['TeamB'].cashBalance).to eq(4654)
           end
         end
 

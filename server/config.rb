@@ -3,7 +3,7 @@ require 'hashie/mash'
 module Config
 
   DEFAULTS = Hashie::Mash.new({
-    initial_balance: 10000,
+    initialBalance: 10000,
     payroll: {
       interval_secs: 60,
       wage_bill: 100

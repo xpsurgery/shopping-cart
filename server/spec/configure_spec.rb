@@ -24,7 +24,7 @@ RSpec.describe 'Preparing to play' do
     let(:new_balance) { 50 }
     let(:new_config) {
       {
-        initial_balance: new_balance
+        initialBalance: new_balance
       }
     }
 
@@ -41,7 +41,7 @@ RSpec.describe 'Preparing to play' do
     end
 
     example 'the game is using the new config' do
-      expect(subject.status.config.initial_balance).to eq(new_balance)
+      expect(subject.status.config.initialBalance).to eq(new_balance)
       expect(subject.status.config.payroll).to eq(Config::DEFAULTS.payroll)
     end
 

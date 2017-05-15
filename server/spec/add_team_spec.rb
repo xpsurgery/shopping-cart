@@ -43,7 +43,7 @@ RSpec.describe 'Game#add_team' do
     end
 
     example 'the team has a balance of zero' do
-      expect(teams['Team Y'].cash_balance).to eq(0)
+      expect(teams['Team Y'].cashBalance).to eq(0)
     end
 
   end
