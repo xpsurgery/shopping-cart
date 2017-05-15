@@ -3,17 +3,17 @@ import { connect } from 'react-redux'
 import Repeat from './Repeat'
 import Teams from '../teams/Teams'
 import Balances from '../trends/Balances'
-import StopButton from './StopButton'
+import ControlPanel from './ControlPanel'
 import { fetchTeams } from '../teams/actionCreators'
 
 const PlayGame = React.createClass({
   render: function() {
     return (
-      <div>
-        <Repeat seconds={2} action={fetchTeams} />
-        <Teams />
+      <div className='playing-page'>
+        <Repeat seconds={5} action={fetchTeams} />
         <Balances />
-        <StopButton />
+        <Teams />
+        <ControlPanel />
       </div>
     )
   }
