@@ -6,7 +6,7 @@ export const FETCH_TEAMS_FAILURE = 'FETCH_TEAMS_FAILURE'
 
 export const fetchTeams = () => ({
   type: API_CALL,
-  endpoint: '/game',
+  endpoint: '/status',
   onRequest: FETCH_TEAMS_REQUEST,
   onSuccess: FETCH_TEAMS_SUCCESS,
   onFailure: FETCH_TEAMS_FAILURE

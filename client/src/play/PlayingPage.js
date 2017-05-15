@@ -4,7 +4,7 @@ import Repeat from './Repeat'
 import Teams from '../teams/Teams'
 import Balances from '../trends/Balances'
 import StopButton from './StopButton'
-import { fetchTeams } from './actionCreators'
+import { fetchTeams } from '../teams/actionCreators'
 
 const PlayGame = React.createClass({
   render: function() {
