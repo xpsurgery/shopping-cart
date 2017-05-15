@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { play, pause } from './actionCreators'
-import { startNewGame } from '../game/actionCreators'
+import { play, pause, resetGame } from './actionCreators'
 
 const ControlPanel = ({dispatch}) =>
   <div className='control-panel'>
@@ -11,7 +10,7 @@ const ControlPanel = ({dispatch}) =>
     <button className='btn btn-danger' onClick={() => dispatch(pause())}>
       Pause
     </button>
-    <button className='btn btn-danger' onClick={() => dispatch(startNewGame())}>
+    <button className='btn btn-danger' onClick={() => dispatch(resetGame())}>
       Restart
     </button>
   </div>

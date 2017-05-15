@@ -39,6 +39,12 @@ module AdminApi
       [result[0], JSON.pretty_generate(result[1].merge({self: request.fullpath}))]
     end
 
+    app.post '/reset' do
+      content_type :json
+      result = app.settings.game.reset
+      [result[0], JSON.pretty_generate(result[1].merge({self: request.fullpath}))]
+    end
+
     app.get '/status' do
       content_type :json
       [200, JSON.pretty_generate(app.settings.game.status)]

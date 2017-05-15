@@ -26,3 +26,16 @@ export const pause = () => ({
   onFailure: PAUSE_FAILURE
 })
 
+export const RESET_REQUEST = 'RESET_REQUEST'
+export const RESET_SUCCESS = 'RESET_SUCCESS'
+export const RESET_FAILURE = 'RESET_FAILURE'
+
+export const resetGame = () => ({
+  type: API_CALL,
+  endpoint: '/reset',
+  method: 'post',
+  onRequest: RESET_REQUEST,
+  onSuccess: RESET_SUCCESS,
+  onFailure: RESET_FAILURE
+})
+
