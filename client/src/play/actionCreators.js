@@ -32,7 +32,7 @@ export const RESET_FAILURE = 'RESET_FAILURE'
 
 export const resetGame = () => ({
   type: API_CALL,
-  endpoint: '/reset',
+  endpoint: '/restart',
   method: 'post',
   onRequest: RESET_REQUEST,
   onSuccess: RESET_SUCCESS,

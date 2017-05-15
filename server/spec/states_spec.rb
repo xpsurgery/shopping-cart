@@ -26,8 +26,8 @@ RSpec.describe 'Game state machine' do
       expect(subject.pause[0]).to eq(400)
     end
 
-    example 'reset is not valid' do
-      expect(subject.reset[0]).to eq(400)
+    example 'restart is not valid' do
+      expect(subject.restart[0]).to eq(400)
     end
 
   end
@@ -60,8 +60,8 @@ RSpec.describe 'Game state machine' do
       expect(subject.pause[0]).to eq(200)
     end
 
-    example 'reset is not valid' do
-      expect(subject.reset[0]).to eq(400)
+    example 'restart is not valid' do
+      expect(subject.restart[0]).to eq(400)
     end
 
   end
@@ -95,8 +95,8 @@ RSpec.describe 'Game state machine' do
       expect(subject.pause[0]).to eq(400)
     end
 
-    example 'reset is valid' do
-      expect(subject.reset[0]).to eq(200)
+    example 'restart is valid' do
+      expect(subject.restart[0]).to eq(200)
     end
 
   end

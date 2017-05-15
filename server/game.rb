@@ -6,18 +6,13 @@ require_relative './randomiser'
 class Game
 
   def initialize
-    @teams = Hashie::Mash.new
     start
   end
 
   def start
     return [400, {errors: 'Action not permitted at this time'}] if @phase == :playing
-    @config = Config::DEFAULTS
-    @challenges = Hashie::Mash.new
-    @teams.each do |_, team|
-      team.cashBalance = 0
-    end
-    @phase = :setup
+    @teams = Hashie::Mash.new
+    reset
     [200, status]
   end
 
@@ -168,9 +163,10 @@ class Game
     [200, status]
   end
 
-  def reset
+  def restart
     return [400, {errors: 'Action not permitted at this time'}] unless @phase == :paused
-    start
+    reset
+    [200, status]
   end
 
   def status
@@ -179,6 +175,17 @@ class Game
       phase: @phase,
       teams: @teams
     })
+  end
+
+  private
+
+  def reset
+    @config = Config::DEFAULTS
+    @challenges = Hashie::Mash.new
+    @teams.each do |_, team|
+      team.cashBalance = 0
+    end
+    @phase = :setup
   end
 
 end
