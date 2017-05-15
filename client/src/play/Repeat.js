@@ -9,7 +9,8 @@ const Repeat = React.createClass({
   ping: function() {
     if (!this.isMounted())
       return
-    this.props.dispatch(this.props.action())
+    if (this.props.enabled)
+      this.props.dispatch(this.props.action())
     setTimeout(this.ping, this.props.seconds * 1000)
   },
 

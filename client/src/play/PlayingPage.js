@@ -6,18 +6,17 @@ import Balances from '../trends/Balances'
 import ControlPanel from './ControlPanel'
 import { fetchTeams } from '../teams/actionCreators'
 
-const PlayGame = React.createClass({
-  render: function() {
-    return (
-      <div className='playing-page'>
-        <Repeat seconds={5} action={fetchTeams} />
-        <Balances />
-        <Teams />
-        <ControlPanel />
-      </div>
-    )
-  }
+const PlayGame = ({ shouldFetch }) =>
+  <div className='playing-page'>
+    <Repeat seconds={5} action={fetchTeams} enabled={shouldFetch} />
+    <Balances />
+    <Teams />
+    <ControlPanel />
+  </div>
+
+const mapStateToProps = ({ phase }) => ({
+  shouldFetch: (phase == 'playing')
 })
 
-export default connect()(PlayGame)
+export default connect(mapStateToProps)(PlayGame)
 
