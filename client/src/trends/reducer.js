@@ -7,21 +7,17 @@ export default (state=initialState, action) => {
   switch (action.type) {
 
     case ADD_TEAM_SUCCESS:
-      return Object.keys(action.response.teams).map(name => ({
-        name: name,
-        data: []
-      }))
+      return action.response.teams
 
     case FETCH_TEAMS_SUCCESS:
       var newstate = {...state}
-      for (let team in action.response.teams) {
-        if (!newstate[team.id])
-          newstate[team.id] = {
-            ...team,
-            history: []
-          }
-        newstate[team.id].history.push(team.balance)
-        newstate[team.id].balance = team.balance
+      for (let teamName in action.response.teams) {
+        let team = {
+          name: newstate[teamName].name,
+          data: newstate[teamName].data || []
+        }
+        team.data = team.data.concat([action.response.teams[teamName].cashBalance])
+        newstate[teamName] = team
       }
       return newstate
 
@@ -32,4 +28,6 @@ export default (state=initialState, action) => {
       return state
   }
 }
+
+export const dataSeries = (state) => Object.keys(state).map(key => state[key])
 
