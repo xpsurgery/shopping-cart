@@ -7,6 +7,7 @@ export default (state=initialState, action) => {
   switch (action.type) {
 
     case ADD_TEAM_SUCCESS:
+    case RESET_SUCCESS:
       return action.response.teams
 
     case FETCH_TEAMS_SUCCESS:
@@ -20,9 +21,6 @@ export default (state=initialState, action) => {
         newstate[teamName] = team
       }
       return newstate
-
-    case RESET_SUCCESS:
-      return initialState
 
     default:
       return state

@@ -10,7 +10,11 @@ const hardConfig = {
 }
 
 const impossibleConfig = {
-  initialBalance: 50000
+  initialBalance: 50000,
+  payroll: {
+    interval_secs: 15,
+    wage_bill: 1000
+  }
 }
 
 const ChooseLevel = () =>

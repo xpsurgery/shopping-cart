@@ -1,5 +1,6 @@
 import { expect } from 'chai'
 import { reductio } from '../app/specHelper'
+import { RESET_SUCCESS } from '../play/actionCreators'
 import { ADD_TEAM_SUCCESS, FETCH_TEAMS_SUCCESS } from '../teams/actionCreators'
 import reducer, { dataSeries } from './reducer'
 
@@ -58,6 +59,39 @@ describe('trends', () => {
         { name: 'qwerty', data: [1, 2, 3]},
         { name: 'asdf', data: [4, 5, 6]}
       ])
+    })
+
+  })
+
+  describe('when a new game is begun', () => {
+
+    it('stores the trends', () => {
+      let actions = [
+        addTeamSuccess, {
+          type: FETCH_TEAMS_SUCCESS,
+          response: {
+            teams: {
+              "qwerty": { name: 'qwerty', cashBalance: 1 },
+              "asdf": { name: 'asdf', cashBalance: 4 }
+            }
+          }
+        }, {
+          type: FETCH_TEAMS_SUCCESS,
+          response: {
+            teams: {
+              "qwerty": { name: 'qwerty', cashBalance: 2 },
+              "asdf": { name: 'asdf', cashBalance: 5 }
+            }
+          }
+        }, {
+          type: RESET_SUCCESS,
+          response: {
+            teams: addTeamSuccess.response.teams
+          }
+        }
+      ]
+      let state = reductio(reducer, actions)
+      expect(state).to.deep.eq(addTeamSuccess.response.teams)
     })
 
   })
