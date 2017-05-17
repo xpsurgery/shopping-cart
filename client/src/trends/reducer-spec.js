@@ -1,4 +1,5 @@
 import { expect } from 'chai'
+import { reductio } from '../app/specHelper'
 import { ADD_TEAM_SUCCESS } from '../teams/actionCreators'
 import reducer from './reducer'
 
@@ -17,7 +18,7 @@ describe('trends', () => {
   describe('when a team has been added', () => {
 
     it('stores the teams', () => {
-      expect(reducer({}, addTeamSuccess)).to.deep.eq([
+      expect(reductio(reducer, [addTeamSuccess])).to.deep.eq([
         { name: 'qwerty', data: []},
         { name: 'asdf', data: []}
       ])
