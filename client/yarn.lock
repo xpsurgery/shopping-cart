@@ -2080,9 +2080,9 @@ jodid25519@^1.0.0:
   dependencies:
     jsbn "~0.1.0"
 
-jquery@2.2.3:
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-2.2.3.tgz#45e07e4190334de36c9e1a64b43b1f1373d91758"
+jquery@3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
 
 js-base64@^2.1.9:
   version "2.1.9"
