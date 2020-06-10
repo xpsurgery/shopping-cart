@@ -2,7 +2,10 @@ import React from 'react'
 import StartButton from './StartButton'
 
 const easyConfig = {
-  initialBalance: 1000000
+  initialBalance: 1000000,
+  sales: {
+    expiry_secs: 20
+  }
 }
 
 const hardConfig = {
@@ -14,6 +17,9 @@ const impossibleConfig = {
   payroll: {
     interval_secs: 15,
     wage_bill: 1000
+  },
+  sales: {
+    expiry_secs: 20
   }
 }
 
